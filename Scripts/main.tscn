@@ -1,0 +1,98 @@
+[gd_scene load_steps=6 format=3 uid="uid://bhxsxr1e62xv1"]
+
+[ext_resource type="Texture2D" uid="uid://cktvlvwnsn0l6" path="res://Scripts/card_edge.png" id="1_euvy4"]
+[ext_resource type="Script" path="res://Scripts/card_display.gd" id="1_myp7x"]
+[ext_resource type="LabelSettings" uid="uid://dfqv7ub11x5m3" path="res://Scripts/new_label_settings.tres" id="2_5psyh"]
+[ext_resource type="Resource" uid="uid://di0xuo8yoo2jx" path="res://card_strike.tres" id="2_halaa"]
+[ext_resource type="Texture2D" uid="uid://3jvnwdwb1u0b" path="res://circle.png" id="3_d3txk"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="BaseCard" type="Control" parent="." node_paths=PackedStringArray("mana_cost", "card_name", "card_description")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 150.0
+offset_bottom = 210.0
+script = ExtResource("1_myp7x")
+card_data = ExtResource("2_halaa")
+mana_cost = NodePath("TextureRect/costLabel")
+card_name = NodePath("NinePatchRect/titleLabel")
+card_description = NodePath("NinePatchRect/descLabel")
+
+[node name="ColorRect" type="ColorRect" parent="BaseCard"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 99.0
+offset_bottom = 159.0
+color = Color(0, 0, 0, 0.25098)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="BaseCard"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 160.0
+texture = ExtResource("1_euvy4")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="titleLabel" type="Label" parent="BaseCard/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.0
+offset_top = 3.0
+offset_right = 28.0
+offset_bottom = 20.0
+grow_horizontal = 2
+text = "Slash"
+label_settings = ExtResource("2_5psyh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="descLabel" type="Label" parent="BaseCard/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -47.0
+offset_top = 88.0
+offset_right = 47.0
+offset_bottom = 157.0
+grow_horizontal = 2
+text = "Nos los representantes del pueblo de la nación Argentina"
+label_settings = ExtResource("2_5psyh")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="BaseCard"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = -4.0
+offset_right = 21.0
+offset_bottom = 20.0
+texture = ExtResource("3_d3txk")
+
+[node name="costLabel" type="Label" parent="BaseCard/TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -13.0
+offset_right = 5.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "2"
+label_settings = ExtResource("2_5psyh")
+horizontal_alignment = 1
+vertical_alignment = 1
