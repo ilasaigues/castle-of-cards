@@ -15,12 +15,20 @@ run/main_scene="res://Scripts/main.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Enums="*res://Scripts/Artifact/ArtifactData/enums.gd"
+
 [display]
 
 window/size/viewport_width=1600
 window/size/viewport_height=900
 window/stretch/mode="viewport"
 window/stretch/scale=2.0
+
+[dotnet]
+
+project/assembly_name="castle-of-cards"
 
 [rendering]
 

@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="BaseCard" load_steps=5 format=3 uid="uid://di0xuo8yoo2jx"]
 
 [ext_resource type="Resource" uid="uid://c1j333bi1udjr" path="res://effect_damage.tres" id="1_vqq38"]
-[ext_resource type="Script" path="res://Scripts/CardData/CardProperties/card_property.gd" id="2_7vm22"]
-[ext_resource type="Script" path="res://Scripts/CardData/CardTypes/base_card.gd" id="3_nx1d4"]
+[ext_resource type="Script" path="res://Scripts/Card/CardData/CardProperties/card_property.gd" id="2_7vm22"]
+[ext_resource type="Script" path="res://Scripts/Card/CardData/CardTypes/base_card.gd" id="3_nx1d4"]
 
 [sub_resource type="Resource" id="Resource_wneww"]
 script = ExtResource("2_7vm22")
