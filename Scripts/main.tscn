@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://bhxsxr1e62xv1"]
 
-[ext_resource type="Script" path="res://Scripts/Card/card_display.gd" id="1_unqs6"]
+[ext_resource type="Script" path="res://Scripts/card_display.gd" id="1_uyuyl"]
 [ext_resource type="LabelSettings" uid="uid://dfqv7ub11x5m3" path="res://Scripts/new_label_settings.tres" id="2_5psyh"]
 [ext_resource type="Resource" uid="uid://di0xuo8yoo2jx" path="res://card_strike.tres" id="2_halaa"]
-[ext_resource type="Texture2D" uid="uid://cktvlvwnsn0l6" path="res://Scripts/Card/card_edge.png" id="3_35eb0"]
 [ext_resource type="Texture2D" uid="uid://3jvnwdwb1u0b" path="res://circle.png" id="3_d3txk"]
+[ext_resource type="Texture2D" uid="uid://cktvlvwnsn0l6" path="res://card_edge.png" id="3_o4ssy"]
 [ext_resource type="Script" path="res://Scripts/Artifact/artifact_display.gd" id="6_kyghr"]
 [ext_resource type="Script" path="res://Scripts/Artifact/ArtifactData/ArtifactProperties/artifact_property.gd" id="7_cucsm"]
 [ext_resource type="Script" path="res://Scripts/Artifact/ArtifactData/base_artifact.gd" id="8_pcab7"]
@@ -29,7 +29,7 @@ offset_left = 103.0
 offset_top = 264.0
 offset_right = 203.0
 offset_bottom = 424.0
-script = ExtResource("1_unqs6")
+script = ExtResource("1_uyuyl")
 card_data = ExtResource("2_halaa")
 mana_cost = NodePath("TextureRect/costLabel")
 card_name = NodePath("NinePatchRect/titleLabel")
@@ -47,7 +47,7 @@ color = Color(0, 0, 0, 0.25098)
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 160.0
-texture = ExtResource("3_35eb0")
+texture = ExtResource("3_o4ssy")
 region_rect = Rect2(0, 0, 16, 16)
 patch_margin_left = 6
 patch_margin_top = 6
@@ -162,7 +162,7 @@ layout_mode = 0
 offset_top = 34.0
 offset_right = 180.0
 offset_bottom = 94.0
-texture = ExtResource("3_35eb0")
+texture = ExtResource("3_o4ssy")
 region_rect = Rect2(0, 0, 16, 16)
 patch_margin_left = 6
 patch_margin_top = 6
