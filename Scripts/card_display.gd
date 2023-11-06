@@ -1,7 +1,7 @@
 extends Control
 class_name CardDisplay
 
-@export var card_data:BaseCard
+@export var card_data:CardData
 
 @export var mana_cost:Label
 @export var card_name:Label

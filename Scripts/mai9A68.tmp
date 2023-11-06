@@ -1,0 +1,321 @@
+[gd_scene load_steps=16 format=3 uid="uid://bhxsxr1e62xv1"]
+
+[ext_resource type="Script" path="res://Scripts/card_display.gd" id="1_uyuyl"]
+[ext_resource type="LabelSettings" uid="uid://dfqv7ub11x5m3" path="res://Scripts/new_label_settings.tres" id="2_5psyh"]
+[ext_resource type="Texture2D" uid="uid://3jvnwdwb1u0b" path="res://circle.png" id="3_d3txk"]
+[ext_resource type="Texture2D" uid="uid://cktvlvwnsn0l6" path="res://card_edge.png" id="3_o4ssy"]
+
+[sub_resource type="GDScript" id="GDScript_htsgf"]
+script/source = "extends BaseCardEffect
+class_name CardEffectDamage
+
+func process_effect(target,args:Array):
+	if target.has(\"take_damage\"):
+		target.take_damage(args)
+	
+"
+
+[sub_resource type="Resource" id="Resource_yc6nc"]
+script = SubResource("GDScript_htsgf")
+
+[sub_resource type="GDScript" id="GDScript_pyy63"]
+script/source = "extends Resource
+class_name CardProperty
+
+enum TargetType {none, all, player, any, singleEnemy, allEnemies}
+
+@export var target:TargetType
+@export var effect:BaseCardEffect
+@export var parameter:int
+
+
+#armor
+#damage
+#buffLength
+#deals {damage}
+"
+
+[sub_resource type="Resource" id="Resource_wneww"]
+script = SubResource("GDScript_pyy63")
+target = 4
+effect = SubResource("Resource_yc6nc")
+parameter = 3
+
+[sub_resource type="GDScript" id="GDScript_wq68d"]
+script/source = "extends Resource
+class_name BaseCard
+
+@export var cost:int
+@export var name:String
+#@export var image:Texture2D
+@export var properties:Array[CardProperty]
+@export var description:String
+
+
+func get_parsed_description():
+	var desc = description
+	for i in range(0,properties.size()):
+		desc = desc.replace(str(\"{\",i,\"}\"),str(properties[i].parameter))
+	return desc
+"
+
+[sub_resource type="Resource" id="Resource_ab214"]
+script = SubResource("GDScript_wq68d")
+cost = 1
+name = "Strike"
+properties = [SubResource("Resource_wneww")]
+description = "Deals {0} damage to target"
+
+[sub_resource type="GDScript" id="GDScript_rlyqq"]
+script/source = "extends Control
+class_name ArtifactDisplay
+
+@export var artifactData: BaseArtifact 
+
+@export var titleLabel: Label
+@export var descLabel: Label
+@export var colorRect: ColorRect
+
+func _ready():
+	if !artifactData: return
+	titleLabel.text = self.artifactData.get_parsed_name()
+	descLabel.text = self.artifactData.get_parsed_description()
+	
+	# Set rect color
+	var rarity = self.artifactData.property.rarity
+	match rarity:
+		ArtifactProperty.Rarity.common:
+			colorRect.color = Color.WEB_GREEN
+		ArtifactProperty.Rarity.heroic:
+			colorRect.color = Color.REBECCA_PURPLE
+		ArtifactProperty.Rarity.mythical:
+			colorRect.color = Color.GOLD
+			
+	
+	
+"
+
+[sub_resource type="GDScript" id="GDScript_5m75c"]
+script/source = "extends Resource
+class_name ArtifactProperty
+
+enum Rarity {common, heroic, mythical}
+
+@export var rarity: Rarity
+@export var parameter: int
+
+"
+
+[sub_resource type="Resource" id="Resource_k7d1d"]
+script = SubResource("GDScript_5m75c")
+rarity = 1
+parameter = 2
+
+[sub_resource type="GDScript" id="GDScript_jydgy"]
+script/source = "extends Resource
+class_name BaseArtifact
+
+@export var name:String
+# La idea tal vez seria tener artefactos como assets reusables que puedan ser
+# Common, Rare, Legendary. Pero que unicamente hagan mejor la carta con un simple
+# valor numerico [Ex: Tus ataques hace +1/+2/+3 de daño por la energia restante
+# en tu pool]
+@export var property:ArtifactProperty
+@export var description:String
+#@export var image:Texture2D
+
+func get_parsed_name():
+	return name + \" (\" + ArtifactProperty.Rarity.keys()[property.rarity] + \")\"
+	
+func get_parsed_description():
+	var desc = description
+	desc = desc.replace(str(\"{0}\"),str(property.parameter))
+	return desc
+"
+
+[sub_resource type="Resource" id="Resource_w1d5y"]
+script = SubResource("GDScript_jydgy")
+name = "Focus"
+property = SubResource("Resource_k7d1d")
+description = "When attacking, deal {0} more damage for each remaining energy unit"
+
+[node name="Node2D" type="Node2D"]
+
+[node name="BaseCard" type="Control" parent="." node_paths=PackedStringArray("mana_cost", "card_name", "card_description")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 103.0
+offset_top = 264.0
+offset_right = 203.0
+offset_bottom = 424.0
+script = ExtResource("1_uyuyl")
+card_data = SubResource("Resource_ab214")
+mana_cost = NodePath("TextureRect/costLabel")
+card_name = NodePath("NinePatchRect/titleLabel")
+card_description = NodePath("NinePatchRect/descLabel")
+
+[node name="ColorRect" type="ColorRect" parent="BaseCard"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 99.0
+offset_bottom = 159.0
+color = Color(0, 0, 0, 0.25098)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="BaseCard"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 160.0
+texture = ExtResource("3_o4ssy")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="titleLabel" type="Label" parent="BaseCard/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.0
+offset_top = 3.0
+offset_right = 28.0
+offset_bottom = 20.0
+grow_horizontal = 2
+text = "Slash"
+label_settings = ExtResource("2_5psyh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="descLabel" type="Label" parent="BaseCard/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -47.0
+offset_top = 88.0
+offset_right = 47.0
+offset_bottom = 157.0
+grow_horizontal = 2
+text = "Nos los representantes del pueblo de la nación Argentina"
+label_settings = ExtResource("2_5psyh")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="BaseCard"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = -4.0
+offset_right = 21.0
+offset_bottom = 20.0
+texture = ExtResource("3_d3txk")
+
+[node name="costLabel" type="Label" parent="BaseCard/TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -13.0
+offset_right = 5.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "2"
+label_settings = ExtResource("2_5psyh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BaseArtifact" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 7.0
+offset_right = 60.0
+offset_bottom = 47.0
+script = SubResource("GDScript_rlyqq")
+artifactData = SubResource("Resource_w1d5y")
+titleLabel = Object(Label,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":5,"anchor_left":0.5,"anchor_top":0.0,"anchor_right":0.5,"anchor_bottom":0.0,"offset_left":-79.0,"offset_top":1.0,"offset_right":84.0,"offset_bottom":18.0,"grow_horizontal":2,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":4,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","text":"Artifact","label_settings":ExtResource("2_5psyh"),"horizontal_alignment":0,"vertical_alignment":1,"autowrap_mode":0,"justification_flags":163,"clip_text":true,"text_overrun_behavior":0,"uppercase":false,"tab_stops":PackedFloat32Array(),"lines_skipped":0,"max_lines_visible":-1,"visible_characters":-1,"visible_characters_behavior":0,"visible_ratio":1.0,"text_direction":0,"language":"","structured_text_bidi_override":0,"structured_text_bidi_override_options":[],"script":null)
+
+descLabel = Object(Label,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":5,"anchor_left":0.5,"anchor_top":0.0,"anchor_right":0.5,"anchor_bottom":0.0,"offset_left":-83.0,"offset_top":19.0,"offset_right":83.0,"offset_bottom":57.0,"grow_horizontal":2,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":4,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","text":"This artifact does something cool","label_settings":ExtResource("2_5psyh"),"horizontal_alignment":0,"vertical_alignment":0,"autowrap_mode":3,"justification_flags":163,"clip_text":false,"text_overrun_behavior":0,"uppercase":false,"tab_stops":PackedFloat32Array(),"lines_skipped":0,"max_lines_visible":-1,"visible_characters":-1,"visible_characters_behavior":0,"visible_ratio":1.0,"text_direction":0,"language":"","structured_text_bidi_override":0,"structured_text_bidi_override_options":[],"script":null)
+
+colorRect = Object(ColorRect,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":0.0,"anchor_bottom":0.0,"offset_left":0.0,"offset_top":34.0,"offset_right":180.0,"offset_bottom":94.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","color":Color(0, 0, 0, 0.25098),"script":null)
+
+
+[node name="TextureRect" type="TextureRect" parent="BaseArtifact"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 27.0
+offset_bottom = 26.0
+texture = ExtResource("3_d3txk")
+
+[node name="placeholder" type="Label" parent="BaseArtifact/TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -13.0
+offset_right = 5.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "F"
+label_settings = ExtResource("2_5psyh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="ColorRect" parent="BaseArtifact"]
+layout_mode = 0
+offset_top = 34.0
+offset_right = 180.0
+offset_bottom = 94.0
+color = Color(0, 0, 0, 0.25098)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="BaseArtifact"]
+layout_mode = 0
+offset_top = 34.0
+offset_right = 180.0
+offset_bottom = 94.0
+texture = ExtResource("3_o4ssy")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="titleLabel" type="Label" parent="BaseArtifact/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -79.0
+offset_top = 1.0
+offset_right = 84.0
+offset_bottom = 18.0
+grow_horizontal = 2
+text = "Artifact"
+label_settings = ExtResource("2_5psyh")
+vertical_alignment = 1
+clip_text = true
+
+[node name="descLabel" type="Label" parent="BaseArtifact/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -83.0
+offset_top = 19.0
+offset_right = 83.0
+offset_bottom = 57.0
+grow_horizontal = 2
+text = "This artifact does something cool"
+label_settings = ExtResource("2_5psyh")
+autowrap_mode = 3

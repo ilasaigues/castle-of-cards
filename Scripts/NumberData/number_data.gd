@@ -15,12 +15,20 @@ func _init(value , operation:OpType = OpType.Flat, base:NumberData=null):
 	self.op_type = operation
 	self._base = base
 	
-func Eval():
+func append(other:NumberData):
+	var current = self
+	
+	while current._base != null:
+		current=current._base
+	current._base=other
+	return self
+	
+func Eval(start_value = 0):
 	var current = self
 	
 	var override
 	
-	var flat = 0
+	var flat = start_value
 	var mult = 1
 	
 	while current != null:
