@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="BaseCardData" load_steps=4 format=3 uid="uid://58vximi7k1dn"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseCardData.gd" id="1_bvxuw"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="1_ith1e"]
+
+[sub_resource type="Resource" id="Resource_brhiy"]
+script = ExtResource("1_ith1e")
+type = 0
+value = 3.0
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+
+[resource]
+script = ExtResource("1_bvxuw")
+id = ""
+name = ""
+cost = 0
+requires_targetting = true
+exhaust = false
+x_cost = false
+action_list = Array[ExtResource("1_ith1e")]([SubResource("Resource_brhiy")])
+description = ""
+rarity = 0

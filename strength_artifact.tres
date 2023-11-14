@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="BaseArtifactData" load_steps=6 format=3 uid="uid://bbkbnkv0oqyq6"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseArtifactData.gd" id="1_1txmf"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/BoolConditionData.gd" id="1_x6fir"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionModifierData.gd" id="2_jd6p7"]
+
+[sub_resource type="Resource" id="Resource_ghro5"]
+script = ExtResource("1_x6fir")
+condition_type = 2
+value = true
+
+[sub_resource type="Resource" id="Resource_v0ibm"]
+script = ExtResource("2_jd6p7")
+type = 0
+amount = 3.0
+operation = 0
+modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_ghro5")])
+
+[resource]
+script = ExtResource("1_1txmf")
+id = "strengh_artifact"
+name = "Beads of Strength"
+modifiers = Array[ExtResource("2_jd6p7")]([SubResource("Resource_v0ibm")])
+triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])

@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="BaseArtifactData" load_steps=13 format=3 uid="uid://cyn1exktdlmd2"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseArtifactData.gd" id="1_t8vth"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/BoolConditionData.gd" id="2_6m34n"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseTriggerData.gd" id="3_v3xrc"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="4_loo3r"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/NumberConditionData.gd" id="5_t5kl7"]
+
+[sub_resource type="Resource" id="Resource_8oefm"]
+script = ExtResource("2_6m34n")
+condition_type = 2
+value = true
+
+[sub_resource type="Resource" id="Resource_eidxi"]
+script = ExtResource("4_loo3r")
+type = 11
+value = 1.0
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+
+[sub_resource type="Resource" id="Resource_27cva"]
+script = ExtResource("5_t5kl7")
+condition_type = 0
+value = 3.0
+
+[sub_resource type="Resource" id="Resource_21gsg"]
+script = ExtResource("4_loo3r")
+type = 10
+value = 1.0
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_27cva")])
+
+[sub_resource type="Resource" id="Resource_2tedd"]
+script = ExtResource("5_t5kl7")
+condition_type = 0
+value = 3.0
+
+[sub_resource type="Resource" id="Resource_e4kuv"]
+script = ExtResource("4_loo3r")
+type = 11
+value = -3.0
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_2tedd")])
+
+[sub_resource type="Resource" id="Resource_doeb0"]
+script = ExtResource("3_v3xrc")
+trigger_action_type = 12
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_8oefm")])
+triggered_actions = Array[ExtResource("4_loo3r")]([SubResource("Resource_eidxi"), SubResource("Resource_21gsg"), SubResource("Resource_e4kuv")])
+
+[resource]
+script = ExtResource("1_t8vth")
+id = "mana_every_three"
+name = "Teapot"
+modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
+triggers = Array[ExtResource("3_v3xrc")]([SubResource("Resource_doeb0")])
