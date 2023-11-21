@@ -38,6 +38,7 @@ enum BoolConditionType
 {
 	TargetIsDead,
 	ActorIsAffected,
+	TargetIsAffected,
 	ActorIsPlayer,
 	ActorIsAlly,
 }
@@ -45,9 +46,8 @@ enum BoolConditionType
 enum NumberConditionType
 {
 	ArtifactCounterEquals,
-	ModifiedValueLessThan,
-	ModifiedValueGreaterThan,
-	ModifiedValueEquals
+	TargetHPLessThan,
+	ActorHPLessThan
 }
 
 enum GamePhase
@@ -62,7 +62,6 @@ enum StatusEffectType
 {
 	Strength,
 	Resilience,
-	Vitality,
 	Weakness,
 	Fragility,
 	Stun,

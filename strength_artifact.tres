@@ -20,5 +20,5 @@ modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/B
 script = ExtResource("1_1txmf")
 id = "strengh_artifact"
 name = "Beads of Strength"
-modifiers = Array[ExtResource("2_jd6p7")]([SubResource("Resource_v0ibm")])
+modifiers = Array[ExtResource("2_jd6p7")]([SubResource("Resource_v0ibm"), null])
 triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
