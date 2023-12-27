@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BaseCharacterData" load_steps=2 format=3 uid="uid://4ehh7hiqboyy"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseCharacterData.gd" id="1_hv0l7"]
+
+[resource]
+script = ExtResource("1_hv0l7")
+id = "dummyChar"
+name = "Dummy"
+max_hp = 10
+starting_status_effects = Array[Resource("res://Scripts/Data/BaseData/BaseStatusEffectData.gd")]([])
+is_player = false

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BaseBattleData" load_steps=3 format=3 uid="uid://cbtgtr28mdsv7"]
+
+[ext_resource type="Resource" uid="uid://4ehh7hiqboyy" path="res://example_enemy.tres" id="1_387uj"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseBattleData.gd" id="1_wsyku"]
+
+[resource]
+script = ExtResource("1_wsyku")
+enemies = Array[Resource("res://Scripts/Data/BaseData/BaseCharacterData.gd")]([ExtResource("1_387uj"), ExtResource("1_387uj")])

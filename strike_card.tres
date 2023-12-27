@@ -11,9 +11,9 @@ conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditio
 
 [resource]
 script = ExtResource("1_bvxuw")
-id = ""
-name = ""
-cost = 0
+id = "strike"
+name = "Strike"
+cost = 1
 requires_targetting = true
 exhaust = false
 x_cost = false

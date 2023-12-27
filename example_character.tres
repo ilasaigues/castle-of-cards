@@ -10,8 +10,8 @@ initial_value = 0
 
 [resource]
 script = ExtResource("1_wuvgj")
-id = ""
-name = ""
+id = "testChar"
+name = "Testy"
 max_hp = 10
 starting_status_effects = Array[ExtResource("2_3jr1r")]([SubResource("Resource_acoxy")])
-is_player = false
+is_player = true
