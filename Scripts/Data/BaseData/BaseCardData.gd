@@ -8,6 +8,7 @@ class_name BaseCardData
 
 @export_category("Usability")
 @export var requires_targetting:bool
+@export var target: Enums.ActionTargetType
 @export var exhaust:bool
 @export var x_cost:bool
 @export var action_list:Array[BaseActionData]

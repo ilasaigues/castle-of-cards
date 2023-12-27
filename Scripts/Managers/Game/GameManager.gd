@@ -22,11 +22,12 @@ func _init():
 func StartGame(
 		starterDeckData,
 		runSeed,
-		playerCharacterData:BaseCharacterData):
+		playerCharacterData:BaseCharacterData,
+		debugBattle: BaseBattleData):
 	PlayerCharacter = CharacterInstance.new(playerCharacterData)
 	print(str("Starting game with player ",playerCharacterData.name,", deck with ",starterDeckData.cards.size(), " cards, seed: ", runSeed))
 	DeckMngr.setDeck(starterDeckData)
-	BattleMngr.StartBattle(self,DeckMngr,null)
+	BattleMngr.StartBattle(self,DeckMngr,debugBattle)
 
 func GetHandSize():
 	return 5

@@ -68,6 +68,16 @@ enum StatusEffectType
 	Poison,
 }
 
+enum ActionTargetType
+{
+	Self,
+	AllEnemies,
+	TargetAny,
+	TargetEnemy,
+	RandomEnemy,
+	All
+}
+
 # Modifies how a modifier changes the values it is modifying.
 # In implementation (ideally) additive goes first, then mult, then override
 enum OperationType
