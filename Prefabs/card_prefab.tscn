@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjw3t2p5c6b0g"]
+
+[ext_resource type="Texture2D" uid="uid://cktvlvwnsn0l6" path="res://card_edge.png" id="1_drjhj"]
+[ext_resource type="Script" path="res://Scripts/Gameplay/CardDisplay.gd" id="1_qewa1"]
+[ext_resource type="Texture2D" uid="uid://3jvnwdwb1u0b" path="res://circle.png" id="2_hb114"]
+
+[node name="CardPrefab" type="Control" node_paths=PackedStringArray("description_label", "cost_label")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_qewa1")
+description_label = NodePath("Card Description")
+cost_label = NodePath("Card Cost")
+
+[node name="Card Edge" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 266.0
+offset_right = 316.0
+offset_bottom = 416.0
+texture = ExtResource("1_drjhj")
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="Cost Circle" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 292.0
+offset_top = 267.0
+offset_right = 316.0
+offset_bottom = 291.0
+texture = ExtResource("2_hb114")
+
+[node name="Card Description" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 216.0
+offset_top = 332.0
+offset_right = 310.0
+offset_bottom = 404.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+scroll_active = false
+
+[node name="Card Cost" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 294.0
+offset_top = 270.0
+offset_right = 314.0
+offset_bottom = 289.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+scroll_active = false

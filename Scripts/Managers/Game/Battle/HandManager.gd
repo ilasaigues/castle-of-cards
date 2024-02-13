@@ -9,6 +9,9 @@ var banish:Array[CardInstance]
 var DeckMngr:DeckManager
 var GameMngr:GameManager
 
+#TEMP
+var cardPrefab = load("res://Prefabs/card_prefab.tscn")
+
 # TODO: Consider having a turn manager
 var currentEnergy: int
 
@@ -20,8 +23,15 @@ func start_new_game(deckManager:DeckManager, gameManager:GameManager):
 	deck.shuffle()
 	new_turn()
 	
+	for cardInstance in hand:
+		var display = cardPrefab.instantiate()
+		display.SetInstance(cardInstance)
+		GameMngr.add_child(display)
+	
+
+	
 # Return void for now
-func play_card(index: int, targets: Array[int]):
+func play_card(index: int, targets: Array[CharacterInstance]):
 	var card = hand[index]
 	var cardData : BaseCardData = card.base_data
 	# Debug
@@ -36,11 +46,24 @@ func play_card(index: int, targets: Array[int]):
 		
 	# This should be moved elsewhere. Maybe TurnManager which handles all the
 	# logic of player/enemy actions
+	
+	var actionContext = ActionContext.new(Enums.GamePhase.ActiveTurn,GameMngr.PlayerCharacter,targets,card)
+	
+	
 	currentEnergy = currentEnergy - card.current_cost
-	var actions = cardData.action_list
-	for action in actions:
-		# Create ActionContexts and submit them?
-		continue
+	var baseActions = cardData.action_list
+	var actionInstances = []
+	for baseAction in baseActions:
+		actionInstances.append(GetActionInstance(baseAction,actionContext))
+	for actionInstance in actionInstances:
+		actionInstance.Execute()
+	
+
+func GetActionInstance(baseAction:BaseActionData,context:ActionContext):
+	match baseAction.type:
+		Enums.ActionType.DamageAction:
+			return DamageActionInstance.new(baseAction,context)	
+	print("ERROR: No action of type "+ str(baseAction.type)+ " defined.")
 
 # Also should go in a TurnManager. The idea behind this is to have a pre-play
 # phase where a card is selected, the targets (potential targets) are highlighted,

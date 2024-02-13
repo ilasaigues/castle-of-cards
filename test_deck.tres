@@ -5,4 +5,4 @@
 
 [resource]
 script = ExtResource("1_6jkki")
-cards = Array[Resource("res://Scripts/Data/BaseData/BaseCardData.gd")]([ExtResource("1_icomq"), ExtResource("1_icomq"), ExtResource("1_icomq")])
+cards = Array[Resource("res://Scripts/Data/BaseData/BaseCardData.gd")]([ExtResource("1_icomq"), ExtResource("1_icomq"), ExtResource("1_icomq"), ExtResource("1_icomq"), ExtResource("1_icomq")])

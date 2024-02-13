@@ -28,6 +28,7 @@ func StartGame(
 	print(str("Starting game with player ",playerCharacterData.name,", deck with ",starterDeckData.cards.size(), " cards, seed: ", runSeed))
 	DeckMngr.setDeck(starterDeckData)
 	BattleMngr.StartBattle(self,DeckMngr,debugBattle)
+	BattleMngr.HandMngr.play_card(0,[BattleMngr.enemies[0]])
 
 func GetHandSize():
 	return 5
