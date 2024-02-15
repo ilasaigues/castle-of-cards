@@ -10,3 +10,9 @@ func _init(base_action:BaseActionData, action_context:ActionContext):
 
 func Execute():
 	print ("This is the base action, it shoulnd't be called")
+
+static func GetActionInstance(baseAction:BaseActionData,context:ActionContext):
+	match baseAction.type:
+		Enums.ActionType.DamageAction:
+			return DamageActionInstance.new(baseAction,context)	
+	print("ERROR: No action of type "+ str(baseAction.type)+ " defined.")

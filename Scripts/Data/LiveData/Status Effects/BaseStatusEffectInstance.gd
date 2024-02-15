@@ -11,8 +11,8 @@ func _get_type() -> Enums.StatusEffectType:
 func _init(value:int):
 	self.value=value
 
-func get_modifiers():
-	pass
+func get_modifiers() -> Array[ActionModifierInstance]:
+	return []
 	
 func get_triggers():
 	pass

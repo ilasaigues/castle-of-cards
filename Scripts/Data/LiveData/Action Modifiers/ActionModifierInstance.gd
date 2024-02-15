@@ -7,12 +7,13 @@ var operation:Enums.OperationType
 var modifier_conditionals:Array[BaseConditionData]
 var source
 
-func _init(type, amount, operation, source, modifier_conditionals=null):
-	self.type=type
-	self.amount=amount
-	self.operation=operation
+func _init(baseData:BaseActionModifierData, source):
+	self.type=baseData.type
+	self.amount=baseData.amount
+	self.operation=baseData.operation
+	self.modifier_conditionals=baseData.modifier_conditionals
 	self.source = source
-	self.modifier_conditionals=modifier_conditionals
+
 
 func is_valid(context:ActionContext):
 	for condition in modifier_conditionals:
@@ -21,7 +22,7 @@ func is_valid(context:ActionContext):
 		if condition is NumberConditionData:
 			pass
 		if condition is PhaseConditionData:
-			pass
+			return condition.phase == context.phase
 
 func check_bool_condition(context:ActionContext, condition:BoolConditionData):
 	match condition.condition_type:
@@ -53,3 +54,13 @@ func check_number_condition(context:ActionContext, condition:NumberConditionData
 	
 func check_phase_condition(context:ActionContext, condition:PhaseConditionData):
 	return context.phase == condition.phase
+
+static func GetActionModifiers(gameManager:GameManager) -> Array[ActionModifierInstance]:
+	var modifiers:Array[ActionModifierInstance] = []
+	for status in gameManager.PlayerCharacter.current_status_effects:
+		for mod in status.get_modifiers():
+				modifiers.append(mod)
+	for artifact in gameManager.ArtifactMngr.Artifacts:
+		#loop through the artifact's modifier instances
+		continue
+	return modifiers

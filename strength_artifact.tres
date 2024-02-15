@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_ghro5"]
 script = ExtResource("1_x6fir")
-condition_type = 2
+condition_type = 3
 value = true
 
 [sub_resource type="Resource" id="Resource_v0ibm"]
@@ -20,5 +20,5 @@ modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/B
 script = ExtResource("1_1txmf")
 id = "strengh_artifact"
 name = "Beads of Strength"
-modifiers = Array[ExtResource("2_jd6p7")]([SubResource("Resource_v0ibm"), null])
+modifiers = Array[ExtResource("2_jd6p7")]([SubResource("Resource_v0ibm")])
 triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])

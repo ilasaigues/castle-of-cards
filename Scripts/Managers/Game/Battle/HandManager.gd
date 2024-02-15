@@ -54,16 +54,10 @@ func play_card(index: int, targets: Array[CharacterInstance]):
 	var baseActions = cardData.action_list
 	var actionInstances = []
 	for baseAction in baseActions:
-		actionInstances.append(GetActionInstance(baseAction,actionContext))
+		actionInstances.append(BaseActionInstance.GetActionInstance(baseAction,actionContext))
 	for actionInstance in actionInstances:
 		actionInstance.Execute()
 	
-
-func GetActionInstance(baseAction:BaseActionData,context:ActionContext):
-	match baseAction.type:
-		Enums.ActionType.DamageAction:
-			return DamageActionInstance.new(baseAction,context)	
-	print("ERROR: No action of type "+ str(baseAction.type)+ " defined.")
 
 # Also should go in a TurnManager. The idea behind this is to have a pre-play
 # phase where a card is selected, the targets (potential targets) are highlighted,
