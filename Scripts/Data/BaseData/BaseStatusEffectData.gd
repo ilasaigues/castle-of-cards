@@ -2,4 +2,5 @@ extends Resource
 class_name BaseStatusEffectData
 
 @export var type:Enums.StatusEffectType
-@export var initial_value:int
+@export var turns:int
+@export var modifiers:Array[BaseActionModifierData]=[]

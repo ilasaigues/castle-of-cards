@@ -47,7 +47,9 @@ func play_card(index: int, targets: Array[CharacterInstance]):
 	# This should be moved elsewhere. Maybe TurnManager which handles all the
 	# logic of player/enemy actions
 	
-	var actionContext = ActionContext.new(Enums.GamePhase.ActiveTurn,GameMngr.PlayerCharacter,targets,card)
+	var actionContext = ActionContext.new(Enums.GamePhase.ActiveTurn,\
+		GameMngr.PlayerCharacter,targets,card,\
+		GameMngr.ArtifactMngr.Artifacts)
 	
 	
 	currentEnergy = currentEnergy - card.current_cost

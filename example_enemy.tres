@@ -1,11 +1,33 @@
-[gd_resource type="Resource" script_class="BaseCharacterData" load_steps=2 format=3 uid="uid://4ehh7hiqboyy"]
+[gd_resource type="Resource" script_class="BaseCharacterData" load_steps=8 format=3 uid="uid://4ehh7hiqboyy"]
 
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseCharacterData.gd" id="1_hv0l7"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionModifierData.gd" id="2_wu813"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectData.gd" id="3_obldq"]
+[ext_resource type="Resource" uid="uid://ps6d8rk0t14e" path="res://Scripts/Resources/StatusEffects/StrengthStatusModifier.tres" id="4_e0smx"]
+
+[sub_resource type="Resource" id="Resource_b655h"]
+script = ExtResource("2_wu813")
+type = 0
+amount = 1.5
+operation = 1
+modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+
+[sub_resource type="Resource" id="Resource_mswut"]
+script = ExtResource("3_obldq")
+type = 3
+turns = 3
+modifiers = Array[ExtResource("2_wu813")]([SubResource("Resource_b655h")])
+
+[sub_resource type="Resource" id="Resource_qy4rx"]
+script = ExtResource("3_obldq")
+type = 0
+turns = 2
+modifiers = Array[ExtResource("2_wu813")]([ExtResource("4_e0smx")])
 
 [resource]
 script = ExtResource("1_hv0l7")
 id = "dummyChar"
 name = "Dummy"
 max_hp = 10
-starting_status_effects = Array[Resource("res://Scripts/Data/BaseData/BaseStatusEffectData.gd")]([])
+starting_status_effects = Array[ExtResource("3_obldq")]([SubResource("Resource_mswut"), SubResource("Resource_qy4rx")])
 is_player = false
