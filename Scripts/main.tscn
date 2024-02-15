@@ -1,9 +1,31 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbwpngm32l1th"]
+[gd_scene load_steps=11 format=3 uid="uid://cbwpngm32l1th"]
 
 [ext_resource type="Script" path="res://Scripts/Test/Test.gd" id="1_rtubh"]
 [ext_resource type="Resource" uid="uid://7g8gnvoct67x" path="res://test_deck.tres" id="2_r0d0j"]
 [ext_resource type="Resource" uid="uid://dcqdcmj1agguh" path="res://example_character.tres" id="3_ueskh"]
 [ext_resource type="Resource" uid="uid://cbtgtr28mdsv7" path="res://test_battle.tres" id="4_dkeru"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/BoolConditionData.gd" id="5_heuuq"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionModifierData.gd" id="6_q08jp"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseArtifactData.gd" id="7_6b715"]
+
+[sub_resource type="Resource" id="Resource_hoxo1"]
+script = ExtResource("5_heuuq")
+condition_type = 0
+value = true
+
+[sub_resource type="Resource" id="Resource_l3lv0"]
+script = ExtResource("6_q08jp")
+type = 0
+amount = 3.0
+operation = 0
+modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_hoxo1")])
+
+[sub_resource type="Resource" id="Resource_03cuq"]
+script = ExtResource("7_6b715")
+id = "Test"
+name = "Test"
+modifiers = Array[ExtResource("6_q08jp")]([SubResource("Resource_l3lv0")])
+triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
 
 [node name="Node2D" type="Node2D"]
 
@@ -12,3 +34,4 @@ script = ExtResource("1_rtubh")
 starterDeck = ExtResource("2_r0d0j")
 playerCharacter = ExtResource("3_ueskh")
 testBattle = ExtResource("4_dkeru")
+artifact = SubResource("Resource_03cuq")
