@@ -15,8 +15,6 @@ func _init(source, baseData:BaseActionModifierData):
 	self.source = source
 
 func is_valid(context:ActionContext):
-	print(Enums.StatType.keys()[self.type])
-	print(modifier_conditionals.size())
 	var valid = true
 	for condition in modifier_conditionals:
 		if condition is BoolConditionData:
@@ -37,7 +35,7 @@ func check_bool_condition(context:ActionContext, condition:BoolConditionData):
 				&& context.actor.current_status_effects.has(source)
 		Enums.BoolConditionType.TargetIsAffected:		
 			return source is BaseStatusEffectInstance\
-				&& context.targets.any(func(t: CharacterInstance): t.current_status_effects.has(source))
+				&& context.targets.any(func(t: CharacterInstance): return t.current_status_effects.has(source))
 		Enums.BoolConditionType.ActorIsPlayer:
 			return context.actor.base_data.is_player
 		Enums.BoolConditionType.ActorIsAlly:

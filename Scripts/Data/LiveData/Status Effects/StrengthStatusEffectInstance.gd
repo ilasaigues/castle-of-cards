@@ -1,4 +1,4 @@
-extends 
+extends BaseStatusEffectInstance 
 class_name StrengthStatusEffectInstance
 
 func _get_type() -> Enums.StatusEffectType:

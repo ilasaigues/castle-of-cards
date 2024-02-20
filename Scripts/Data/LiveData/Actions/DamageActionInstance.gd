@@ -19,7 +19,7 @@ func Execute():
 		var targetModifiers: Array[ActionModifierInstance]
 		for effect in target.current_status_effects:
 			targetModifiers.append_array(effect.get_modifiers())
-
+		
 		# Get modifiers for target that affect damage
 		var filteredTargetModifiers: Array[ActionModifierInstance]
 		filteredTargetModifiers.assign(\
@@ -27,7 +27,6 @@ func Execute():
 				.filter(func(mod) : return mod.is_valid(self.action_context))\
 				.filter(func(mod) : return mod.type == Enums.StatType.Damage)\
 		)
-
 		var targetDmg = BaseActionInstance.GetModifiedOutput(damage, filteredTargetModifiers)
 		print("dealing damage to target")
 		print(target.current_hp)

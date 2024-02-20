@@ -15,10 +15,6 @@ func is_alive():
 func _init(baseData:BaseCharacterData):
 	self.base_data = baseData
 	current_hp = baseData.max_hp
-	print("initializing character")
 	for statusEffectData in baseData.starting_status_effects:
-		print(statusEffectData.modifiers.size())
-		print(statusEffectData.modifiers[0].modifier_conditionals.size())
 		current_status_effects.append(BaseStatusEffectInstance.new(statusEffectData))
-	print("char end")
 
