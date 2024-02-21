@@ -7,6 +7,7 @@ enum StatType
 	Healing,
 	Defense,
 	StatusEffectAmount,
+	StatusEffectTurns,
 	DrawCount,
 	EnergyGain,
 	MaxHP,
@@ -27,7 +28,7 @@ enum ActionType
 	CreateCardAction,
 	DeathAction,
 	GainEnergyAction,
-	ChangeArtifactCounterAction,
+	ChangeArtifactCountesrAction,
 	StartTurnAction,
 	EndTurnAction,
 }
@@ -64,6 +65,7 @@ enum StatusEffectType
 	Resilience,
 	Weakness,
 	Fragility,
+	Disease,
 	Stun,
 	Poison,
 }

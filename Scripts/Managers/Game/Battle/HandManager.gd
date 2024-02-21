@@ -24,10 +24,13 @@ func start_new_game(deckManager:DeckManager, gameManager:GameManager):
 	# deck.shuffle()
 	new_turn()
 	
+	var idx = 0
 	for cardInstance in hand:
 		var display = cardPrefab.instantiate()
 		display.SetInstance(cardInstance)
 		GameMngr.add_child(display)
+		display.position.x += 110 * idx
+		idx=idx+1
 	
 
 	

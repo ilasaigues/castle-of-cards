@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="BaseCardData" load_steps=4 format=3 uid="uid://8je7a82fr144"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="1_g0cba"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseCardData.gd" id="3_2aph7"]
+
+[sub_resource type="Resource" id="Resource_xd0v1"]
+script = ExtResource("1_g0cba")
+type = 0
+value = 6.0
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+
+[resource]
+script = ExtResource("3_2aph7")
+id = "stun_strike_card"
+name = "stun_strike_card"
+cost = 1
+requires_targetting = true
+target = 3
+exhaust = false
+x_cost = false
+action_list = Array[ExtResource("1_g0cba")]([SubResource("Resource_xd0v1"), null])
+description = "Deal 6 damage. If enemy hp is still less than 5, Stuns for 1 turn"
+rarity = 0

@@ -4,6 +4,7 @@ extends Control
 @export var cost_label:RichTextLabel
 
 var instance:CardInstance
+var xPos:int
 
 func SetInstance(instance:CardInstance):
 	self.instance = instance

@@ -18,5 +18,10 @@ func StartBattle(gameManager:GameManager, deckManager:DeckManager, battleData:Ba
 	HandMngr.start_new_game(deckManager,GameMngr)
 	for data in battleData.enemies:
 		enemies.append(CharacterInstance.new(data))
+		
+	for artifact in GameMngr.ArtifactMngr.Artifacts:
+		var triggers=artifact.get_triggers()
+#		for trigger in triggers
+#			trigger.con
 	
 

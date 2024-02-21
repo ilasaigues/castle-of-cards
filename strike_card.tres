@@ -19,5 +19,5 @@ target = 2
 exhaust = false
 x_cost = false
 action_list = Array[ExtResource("1_ith1e")]([SubResource("Resource_jy8xx")])
-description = "Heals for 2 points"
+description = "Deals 3 points of damage"
 rarity = 0

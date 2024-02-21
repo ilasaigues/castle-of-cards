@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="BaseDeckData" load_steps=4 format=3 uid="uid://7g8gnvoct67x"]
+[gd_resource type="Resource" script_class="BaseDeckData" load_steps=5 format=3 uid="uid://7g8gnvoct67x"]
 
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseDeckData.gd" id="1_6jkki"]
 [ext_resource type="Resource" uid="uid://c765df01yedcd" path="res://strike_card.tres" id="1_icomq"]
 [ext_resource type="Resource" uid="uid://58vximi7k1dn" path="res://heal_card.tres" id="2_plbub"]
+[ext_resource type="Resource" uid="uid://8je7a82fr144" path="res://stun_strike_card.tres" id="3_ypyyf"]
 
 [resource]
 script = ExtResource("1_6jkki")
-cards = Array[Resource("res://Scripts/Data/BaseData/BaseCardData.gd")]([ExtResource("1_icomq"), ExtResource("1_icomq"), ExtResource("1_icomq"), ExtResource("2_plbub"), ExtResource("2_plbub")])
+cards = Array[Resource("res://Scripts/Data/BaseData/BaseCardData.gd")]([ExtResource("1_icomq"), ExtResource("1_icomq"), ExtResource("2_plbub"), ExtResource("2_plbub"), ExtResource("3_ypyyf")])

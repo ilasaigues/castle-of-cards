@@ -32,14 +32,27 @@ static func GetActionInstance(baseAction:BaseActionData,context:ActionContext):
 			return DamageActionInstance.new(baseAction,context)	
 		Enums.ActionType.HealAction:
 			return HealingActionInstance.new(baseAction,context)	
+		Enums.ActionType.ApplyStatusAction:
+			return ApplyStatusActionInstance.new(baseAction,context)	
 	print("ERROR: No action of type "+ str(baseAction.type)+ " defined.")
-	
+
+static func PrintModifier(mod:ActionModifierInstance):
+	var sourceDbg: String
+	if mod.source is ArtifactInstance:
+		sourceDbg="Source is artifact %s" % mod.source.baseData.name
+	else:
+		sourceDbg="Source is status effect %s" % Enums.StatusEffectType.keys()[mod.source.type]
+	print("Applying modifier to stat %s. %s. Op-Amount: %s-%s" % \
+	[Enums.StatType.keys()[mod.type], sourceDbg, Enums.OperationType.keys()[mod.operation], mod.amount])
+			
 static func GetModifiedOutput(initValue: int, modifiers: Array[ActionModifierInstance]) -> int:
 	var additive = 0
 	var multiplicative = 1
 	var override = null
 
 	for mod in modifiers:
+		# DEBUG
+		PrintModifier(mod)
 		match mod.operation:
 			Enums.OperationType.Additive:
 				additive += mod.amount

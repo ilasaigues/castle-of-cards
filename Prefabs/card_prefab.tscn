@@ -13,10 +13,10 @@ cost_label = NodePath("Card Cost")
 
 [node name="Card Edge" type="NinePatchRect" parent="."]
 layout_mode = 0
-offset_left = 210.0
-offset_top = 266.0
-offset_right = 316.0
-offset_bottom = 416.0
+offset_left = 76.0
+offset_top = 283.0
+offset_right = 182.0
+offset_bottom = 433.0
 texture = ExtResource("1_drjhj")
 patch_margin_left = 6
 patch_margin_top = 6
@@ -25,26 +25,27 @@ patch_margin_bottom = 6
 
 [node name="Cost Circle" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 292.0
-offset_top = 267.0
-offset_right = 316.0
-offset_bottom = 291.0
+offset_left = 158.0
+offset_top = 284.0
+offset_right = 182.0
+offset_bottom = 308.0
 texture = ExtResource("2_hb114")
 
 [node name="Card Description" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 216.0
-offset_top = 332.0
-offset_right = 310.0
-offset_bottom = 404.0
+offset_left = 82.0
+offset_top = 349.0
+offset_right = 176.0
+offset_bottom = 421.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 12
 scroll_active = false
 
 [node name="Card Cost" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 294.0
-offset_top = 270.0
-offset_right = 314.0
-offset_bottom = 289.0
+offset_left = 160.0
+offset_top = 287.0
+offset_right = 180.0
+offset_bottom = 306.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 scroll_active = false

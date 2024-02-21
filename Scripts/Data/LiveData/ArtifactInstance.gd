@@ -12,3 +12,9 @@ func get_modifiers() -> Array[ActionModifierInstance]:
 	for baseMod in baseData.modifiers:
 		mods.append(ActionModifierInstance.new(self, baseMod))
 	return mods
+	
+func get_triggers() -> Array[BaseTriggerInstance]:
+	var triggers:Array[BaseTriggerInstance] = []
+	for baseTriger in baseData.triggers:
+		triggers.append(BaseTriggerInstance.new(baseTriger))
+	return triggers

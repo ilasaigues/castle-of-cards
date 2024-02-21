@@ -23,12 +23,22 @@ func StartGame(
 		starterDeckData,
 		runSeed,
 		playerCharacterData:BaseCharacterData,
-		debugBattle: BaseBattleData):
+		debugBattle: BaseBattleData,
+		artifactsData:Array[BaseArtifactData]):
 	PlayerCharacter = CharacterInstance.new(playerCharacterData)
 	print(str("Starting game with player ",playerCharacterData.name,", deck with ",starterDeckData.cards.size(), " cards, seed: ", runSeed))
 	DeckMngr.setDeck(starterDeckData)
 	BattleMngr.StartBattle(self,DeckMngr,debugBattle)
+	ArtifactMngr.InitArtifacts(artifactsData)
 	#test
+	
+	# phases
+	# Start battle
+	# Turn start 
+	# 	Draw cards (each individual card drawn may have triggers)
+	# Play card (target selection) (may have triggers)
+	# Discard
+	# End turn
 	BattleMngr.HandMngr.play_card(0,[BattleMngr.enemies[0]])
 	BattleMngr.HandMngr.play_card(3,[BattleMngr.enemies[0]])
 
