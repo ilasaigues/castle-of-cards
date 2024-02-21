@@ -9,7 +9,7 @@
 script = ExtResource("1_hv0l7")
 id = "dummyChar"
 name = "Dummy"
-max_hp = 10
-starting_status_effects = Array[Resource("res://Scripts/Data/BaseData/BaseStatusEffectData.gd")]([ExtResource("2_eeigu"), ExtResource("4_iiyh3"), ExtResource("4_kmqik")])
+max_hp = 20
+starting_status_effects = Array[Resource("res://Scripts/Data/BaseData/BaseStatusEffectData.gd")]([ExtResource("4_iiyh3"), ExtResource("4_kmqik"), ExtResource("2_eeigu")])
 starting_status_effects_turns = Array[int]([3, 2, 1])
 is_player = false

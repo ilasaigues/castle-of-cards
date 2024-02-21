@@ -21,7 +21,7 @@ func GetModifiers(character: CharacterInstance,modType: Enums.StatType) -> Array
 	var filteredModifier: Array[ActionModifierInstance]
 	filteredModifier.assign(\
 		modifiers\
-			.filter(func(mod) : return mod.is_valid(self.action_context))\
+			.filter(func(mod) : return mod.is_valid(character, self.action_context))\
 			.filter(func(mod) : return mod.type == modType)\
 		)
 	return filteredModifier

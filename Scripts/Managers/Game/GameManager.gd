@@ -41,6 +41,7 @@ func StartGame(
 	# End turn
 	BattleMngr.HandMngr.play_card(0,[BattleMngr.enemies[0]])
 	BattleMngr.HandMngr.play_card(3,[BattleMngr.enemies[0]])
+	BattleMngr.HandMngr.play_card(4,[BattleMngr.enemies[0]])
 
 func GetHandSize():
 	return 5

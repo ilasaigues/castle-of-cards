@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cbwpngm32l1th"]
+[gd_scene load_steps=11 format=3 uid="uid://cbwpngm32l1th"]
 
 [ext_resource type="Script" path="res://Scripts/Test/Test.gd" id="1_rtubh"]
 [ext_resource type="Resource" uid="uid://7g8gnvoct67x" path="res://test_deck.tres" id="2_r0d0j"]
@@ -13,17 +13,12 @@ script = ExtResource("5_kyj8s")
 condition_type = 3
 value = true
 
-[sub_resource type="Resource" id="Resource_75oy1"]
-script = ExtResource("5_kyj8s")
-condition_type = 1
-value = true
-
 [sub_resource type="Resource" id="Resource_d107k"]
 script = ExtResource("6_x5w80")
 type = 0
 amount = 2.0
 operation = 0
-modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_t1pmm"), SubResource("Resource_75oy1")])
+modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_t1pmm")])
 
 [sub_resource type="Resource" id="Resource_qk3ep"]
 script = ExtResource("5_84ocy")
@@ -39,4 +34,4 @@ script = ExtResource("1_rtubh")
 starterDeck = ExtResource("2_r0d0j")
 playerCharacter = ExtResource("3_ueskh")
 testBattle = ExtResource("4_dkeru")
-starterArtifacts = Array[Object]([SubResource("Resource_qk3ep")])
+starterArtifacts = Array[ExtResource("5_84ocy")]([SubResource("Resource_qk3ep")])

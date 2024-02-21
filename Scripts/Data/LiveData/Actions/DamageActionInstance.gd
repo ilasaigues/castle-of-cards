@@ -10,9 +10,7 @@ func Execute():
 	var damage = BaseActionInstance.GetModifiedOutput(base_action.value, modifiers)
 	
 	for target in self.action_context.targets:
-		print("target modifiers")
 		var targetModifiers = self.GetModifiers(target, modType)
-		print(targetModifiers.size())
 		var targetDmg = BaseActionInstance.GetModifiedOutput(damage, targetModifiers)
 		print("Damaged target from %s to %s" % [target.current_hp, target.current_hp-targetDmg])
 		target.current_hp -= targetDmg
