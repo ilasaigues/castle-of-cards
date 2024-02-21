@@ -6,4 +6,5 @@ class_name BaseCharacterData
 @export var prefab:Node = null
 @export var max_hp:int = 0
 @export var starting_status_effects:Array[BaseStatusEffectData] = []
+@export var starting_status_effects_turns:Array[int] = []
 @export var is_player:bool = false

@@ -20,7 +20,8 @@ func start_new_game(deckManager:DeckManager, gameManager:GameManager):
 	GameMngr = gameManager
 	clear()
 	deck.append_array(deckManager.Cards)
-	deck.shuffle()
+	# DEBUG
+	# deck.shuffle()
 	new_turn()
 	
 	for cardInstance in hand:
@@ -51,13 +52,10 @@ func play_card(index: int, targets: Array[CharacterInstance]):
 		GameMngr.PlayerCharacter,targets,card,\
 		GameMngr.ArtifactMngr.Artifacts)
 	
-	
 	currentEnergy = currentEnergy - card.current_cost
-	var baseActions = cardData.action_list
-	var actionInstances = []
-	for baseAction in baseActions:
-		actionInstances.append(BaseActionInstance.GetActionInstance(baseAction,actionContext))
-	for actionInstance in actionInstances:
+	
+	for baseAction in cardData.action_list:
+		var actionInstance = BaseActionInstance.GetActionInstance(baseAction,actionContext)
 		actionInstance.Execute()
 	
 

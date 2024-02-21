@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BaseStatusEffectData" load_steps=3 format=3 uid="uid://bee5mqx7ftf6g"]
+
+[ext_resource type="Resource" uid="uid://dglot6yn07xs6" path="res://Scripts/Resources/StatusEffects/FragilityStatusModifier.tres" id="1_5fawi"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectData.gd" id="2_ievne"]
+
+[resource]
+script = ExtResource("2_ievne")
+type = 3
+modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([ExtResource("1_5fawi")])

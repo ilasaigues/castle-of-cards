@@ -11,6 +11,6 @@ value = true
 [resource]
 script = ExtResource("2_vgjlw")
 type = 0
-amount = 1.2
+amount = 1.5
 operation = 1
 modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_uixgu")])

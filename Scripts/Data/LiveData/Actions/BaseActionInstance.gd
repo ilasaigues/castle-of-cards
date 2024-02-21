@@ -7,22 +7,31 @@ var action_context:ActionContext
 func _init(base_action:BaseActionData, action_context:ActionContext):
 	self.base_action = base_action
 	self.action_context = action_context
-
+	
 func Execute():
 	print ("This is the base action, it shoulnd't be called")
 
-func GetActorModifiers() -> Array[ActionModifierInstance]:
+func GetModifiers(character: CharacterInstance,modType: Enums.StatType) -> Array[ActionModifierInstance]:
 	var modifiers:Array[ActionModifierInstance] = []
-	for status in self.action_context.actor.current_status_effects:
+	for status in character.current_status_effects:
 		modifiers.append_array(status.get_modifiers())
 	for artifact in self.action_context.artifacts:
 		modifiers.append_array(artifact.get_modifiers())
-	return modifiers
+		
+	var filteredModifier: Array[ActionModifierInstance]
+	filteredModifier.assign(\
+		modifiers\
+			.filter(func(mod) : return mod.is_valid(self.action_context))\
+			.filter(func(mod) : return mod.type == modType)\
+		)
+	return filteredModifier
 	
 static func GetActionInstance(baseAction:BaseActionData,context:ActionContext):
 	match baseAction.type:
 		Enums.ActionType.DamageAction:
 			return DamageActionInstance.new(baseAction,context)	
+		Enums.ActionType.HealAction:
+			return HealingActionInstance.new(baseAction,context)	
 	print("ERROR: No action of type "+ str(baseAction.type)+ " defined.")
 	
 static func GetModifiedOutput(initValue: int, modifiers: Array[ActionModifierInstance]) -> int:
