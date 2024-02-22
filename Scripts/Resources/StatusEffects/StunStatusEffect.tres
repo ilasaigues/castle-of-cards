@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BaseStatusEffectData" load_steps=2 format=3 uid="uid://bgnkspn17vo74"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectData.gd" id="1_djkm2"]
+
+[resource]
+script = ExtResource("1_djkm2")
+type = 5
+modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])

@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="BaseCardData" load_steps=8 format=3 uid="uid://8je7a82fr144"]
+[gd_resource type="Resource" script_class="BaseCardData" load_steps=9 format=3 uid="uid://8je7a82fr144"]
 
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="1_g0cba"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/NumberConditionData.gd" id="2_x2ac0"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseCardData.gd" id="3_2aph7"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectActionData.gd" id="3_adrjo"]
+[ext_resource type="Resource" uid="uid://bgnkspn17vo74" path="res://Scripts/Resources/StatusEffects/StunStatusEffect.tres" id="3_ckcto"]
 
 [sub_resource type="Resource" id="Resource_xd0v1"]
 script = ExtResource("1_g0cba")
@@ -11,17 +12,17 @@ type = 0
 value = 1.0
 conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
 
-[sub_resource type="Resource" id="Resource_rxfk7"]
+[sub_resource type="Resource" id="Resource_3lkda"]
 script = ExtResource("2_x2ac0")
-condition_type = 2
+condition_type = 1
 value = 5.0
 
-[sub_resource type="Resource" id="Resource_cc43y"]
+[sub_resource type="Resource" id="Resource_cd7qg"]
 script = ExtResource("3_adrjo")
-seType = 3
+status_effect = ExtResource("3_ckcto")
 type = 3
 value = 4.0
-conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_rxfk7")])
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_3lkda")])
 
 [resource]
 script = ExtResource("3_2aph7")
@@ -32,6 +33,6 @@ requires_targetting = true
 target = 3
 exhaust = false
 x_cost = false
-action_list = Array[ExtResource("1_g0cba")]([SubResource("Resource_xd0v1"), SubResource("Resource_cc43y")])
+action_list = Array[ExtResource("1_g0cba")]([SubResource("Resource_xd0v1"), SubResource("Resource_cd7qg")])
 description = "Deal 6 damage. If enemy hp is still less than 5, Stuns for 1 turn"
 rarity = 0

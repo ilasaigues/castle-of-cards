@@ -11,6 +11,39 @@ func _init(base_action:BaseActionData, action_context:ActionContext):
 func Execute():
 	print ("This is the base action, it shoulnd't be called")
 
+func is_action_valid(character: CharacterInstance):
+	var valid = true
+	for condition in base_action.conditions:
+		if condition is BoolConditionData:
+			valid = valid and check_bool_condition(character,condition)
+		if condition is NumberConditionData:
+			valid = valid and check_number_condition(character,condition)
+		if condition is PhaseConditionData:
+			valid = valid and check_phase_condition(character,condition)
+	return valid
+
+func check_bool_condition(character:CharacterInstance,condition:BoolConditionData):
+	match condition.condition_type:
+		_:
+			return true
+	
+func check_phase_condition(character:CharacterInstance,condition:PhaseConditionData):
+	match condition.condition_type:
+		_:
+			return true
+			
+func check_number_condition(character:CharacterInstance,condition:NumberConditionData):
+	var charIsActor = character == self.action_context.actor
+	var charIsTarget = self.action_context.targets.any(func(t): return t==character)
+	match condition.condition_type:
+		Enums.NumberConditionType.TargetHPLessThan:
+			var charHpIsLower = character.current_hp < condition.value
+			return charIsActor or (charIsTarget and charHpIsLower)
+		Enums.NumberConditionType.ActorHPLessThan:
+			var charHpIsLower = character.current_hp < condition.value
+			return charIsTarget or (charIsActor and charHpIsLower)
+
+
 func GetModifiers(character: CharacterInstance,modType: Enums.StatType) -> Array[ActionModifierInstance]:
 	var modifiers:Array[ActionModifierInstance] = []
 	for status in character.current_status_effects:
@@ -21,10 +54,16 @@ func GetModifiers(character: CharacterInstance,modType: Enums.StatType) -> Array
 	var filteredModifier: Array[ActionModifierInstance]
 	filteredModifier.assign(\
 		modifiers\
-			.filter(func(mod) : return mod.is_valid(character, self.action_context))\
+			.filter(func(mod) : return mod.is_valid(self.action_context))\
 			.filter(func(mod) : return mod.type == modType)\
 		)
 	return filteredModifier
+
+func GetActorModifiers(modType: Enums.StatType) -> Array[ActionModifierInstance]:
+	return GetModifiers(self.action_context.actor,modType)
+
+func GetTargetModifiers(modType: Enums.StatType) -> Array[ActionModifierInstance]:
+	return GetModifiers(self.action_context.current_target_eval,modType)
 	
 static func GetActionInstance(baseAction:BaseActionData,context:ActionContext):
 	match baseAction.type:
