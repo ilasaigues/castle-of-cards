@@ -4,5 +4,5 @@ class_name BaseActionData
 # An actual instance of the action will be created based on this, with the type determined by the first variable
 @export var type:Enums.ActionType
 @export var value:float
-@export var conditions:Array[BaseConditionData]
+@export var conditions:Array[BaseConditionData]=[]
 

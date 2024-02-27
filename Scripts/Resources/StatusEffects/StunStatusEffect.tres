@@ -4,5 +4,7 @@
 
 [resource]
 script = ExtResource("1_djkm2")
-type = 5
+name = "Stun"
 modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
+triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
+isBuff = false

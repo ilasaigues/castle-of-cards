@@ -2,10 +2,10 @@ extends BaseActionInstance
 class_name DamageActionInstance
 
 func Execute():
-	var actorEffects = self.action_context.actor.current_status_effects
-	
 	var modType = Enums.StatType.Damage
+	
 	var modifiers = self.GetActorModifiers(modType)
+	print("Damage action. Initial damage %s" % base_action.value)
 	var damage = BaseActionInstance.GetModifiedOutput(base_action.value, modifiers)
 	
 	for tIdx in range(self.action_context.targets.size()):

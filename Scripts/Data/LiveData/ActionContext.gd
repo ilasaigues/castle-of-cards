@@ -7,6 +7,8 @@ var targets:Array[CharacterInstance]
 var artifacts: Array[ArtifactInstance]
 var source_card:CardInstance
 var current_target_eval:CharacterInstance
+var action_instance:BaseActionInstance
+var result: int
 #var source_trigger:TriggerInstance
 
 func _init(

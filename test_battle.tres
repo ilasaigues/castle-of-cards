@@ -5,5 +5,6 @@
 [ext_resource type="Resource" uid="uid://ltrjyfbp24vd" path="res://example_enemy_2.tres" id="2_vkcdr"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_wsyku")
 enemies = Array[Resource("res://Scripts/Data/BaseData/BaseCharacterData.gd")]([ExtResource("1_387uj"), ExtResource("2_vkcdr")])

@@ -5,5 +5,8 @@
 
 [resource]
 script = ExtResource("2_hcadu")
-type = 4
+name = "Disease"
+description = "Character can't benefit from any healing"
 modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([ExtResource("1_il3yh")])
+triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
+isBuff = false

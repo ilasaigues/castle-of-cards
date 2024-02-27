@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BaseStatusEffectData" load_steps=2 format=3 uid="uid://6ugqfunrqx38"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectData.gd" id="1_35c8k"]
+
+[resource]
+script = ExtResource("1_35c8k")
+name = "Frightened"
+description = "Character has a 50% chance to remain still during their turn"
+modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
+triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
+isBuff = false

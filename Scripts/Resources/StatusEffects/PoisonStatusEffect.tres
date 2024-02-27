@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BaseStatusEffectData" load_steps=2 format=3 uid="uid://b1b54l0tac8u3"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectData.gd" id="2_1gp6p"]
+
+[resource]
+script = ExtResource("2_1gp6p")
+name = "Poison"
+modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
+triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
+isBuff = false

@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="BaseStatusEffectData" load_steps=8 format=3 uid="uid://d1uswrkeq5y8o"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/BoolConditionData.gd" id="1_o510b"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectData.gd" id="2_5y6pg"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/StatusEffectConditionData.gd" id="2_v4g2q"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionModifierData.gd" id="2_y7y8a"]
+
+[sub_resource type="Resource" id="Resource_mnldo"]
+script = ExtResource("2_v4g2q")
+condition_type = 1
+apply_to_buffs = false
+
+[sub_resource type="Resource" id="Resource_1y5ma"]
+script = ExtResource("1_o510b")
+condition_type = 2
+value = true
+
+[sub_resource type="Resource" id="Resource_33013"]
+script = ExtResource("2_y7y8a")
+type = 4
+amount = 0.0
+operation = 2
+modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_mnldo"), SubResource("Resource_1y5ma")])
+
+[resource]
+script = ExtResource("2_5y6pg")
+name = "Hyped Up"
+description = "Character is inmune to all Debuffs"
+modifiers = Array[ExtResource("2_y7y8a")]([SubResource("Resource_33013")])
+triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
+isBuff = true

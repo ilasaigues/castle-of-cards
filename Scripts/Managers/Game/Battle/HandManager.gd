@@ -60,6 +60,7 @@ func play_card(index: int, targets: Array[CharacterInstance]):
 	for baseAction in cardData.action_list:
 		var actionInstance = BaseActionInstance.GetActionInstance(baseAction,actionContext)
 		actionInstance.Execute()
+		actionContext.current_target_eval = null
 	
 
 # Also should go in a TurnManager. The idea behind this is to have a pre-play

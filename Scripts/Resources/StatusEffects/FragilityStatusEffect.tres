@@ -5,5 +5,8 @@
 
 [resource]
 script = ExtResource("2_ievne")
-type = 3
+name = "Fragility"
+description = "Damage against this enemy deals for 50% extra amount"
 modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([ExtResource("1_5fawi")])
+triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
+isBuff = false

@@ -28,7 +28,8 @@ enum ActionType
 	CreateCardAction,
 	DeathAction,
 	GainEnergyAction,
-	ChangeArtifactCountesrAction,
+	ChangeArtifactCounterAction,
+	StartBattleAction,
 	StartTurnAction,
 	EndTurnAction,
 }
@@ -42,18 +43,39 @@ enum BoolConditionType
 	TargetIsAffected,
 	ActorIsPlayer,
 	ActorIsAlly,
+	# TODO: check this. It's supposed to be used for triggers right? When player draws
+	# a card out of turn
+	CardIsDrawn,
+}
+
+enum StatusEffectConditionType 
+{
+	StatusEffectAppliedIs,
+	StatusEffectAppliedIsBuff,
+	TargetHasStatusEffect,
+	ActorHasStatusEffect
+}
+
+enum TriggerConditionType
+{
+	ActorExecutesAction,
+	ActorExectuesActionTarget,
+	ActorKillsTrigger
 }
 
 enum NumberConditionType
 {
 	ArtifactCounterEquals,
 	TargetHPLessThan,
-	ActorHPLessThan
+	ActorHPLessThan,
+	CharacterHPLessThan,
 }
 
 enum GamePhase
 {
+	BattleStart,
 	TurnStart,
+	DrawStart,
 	ActiveTurn,
 	TurnEnd,
 	GameOver,
@@ -78,6 +100,24 @@ enum ActionTargetType
 	TargetEnemy,
 	RandomEnemy,
 	All
+}
+
+enum TriggerTargetType 
+{
+	Player,
+	ActorEnemy,
+	RandomEnemy,
+	RandomCharacter,
+	AllEnemies,
+	AllAllies,
+	All
+}
+
+enum TriggerActor
+{
+	ArtifactTriggerByPlayer,
+	ArtifactTriggerByEnvironment,
+	StatusEffect
 }
 
 # Modifies how a modifier changes the values it is modifying.

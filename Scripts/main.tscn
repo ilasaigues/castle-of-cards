@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cbwpngm32l1th"]
+[gd_scene load_steps=30 format=3 uid="uid://cbwpngm32l1th"]
 
 [ext_resource type="Script" path="res://Scripts/Test/Test.gd" id="1_rtubh"]
 [ext_resource type="Resource" uid="uid://7g8gnvoct67x" path="res://test_deck.tres" id="2_r0d0j"]
@@ -7,6 +7,14 @@
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseArtifactData.gd" id="5_84ocy"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/BoolConditionData.gd" id="5_kyj8s"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionModifierData.gd" id="6_x5w80"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/PhaseConditionData.gd" id="8_5qk2g"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/StatusEffectConditionData.gd" id="8_8t20a"]
+[ext_resource type="Resource" uid="uid://bgnkspn17vo74" path="res://Scripts/Resources/StatusEffects/StunStatusEffect.tres" id="9_4vm7h"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseTriggerData.gd" id="9_yjwqv"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="10_evv31"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectActionData.gd" id="13_d47oe"]
+[ext_resource type="Resource" uid="uid://iujm04rktl37" path="res://Scripts/Resources/Artifacts/EyeOfTerrorArtifact.tres" id="13_uegqh"]
+[ext_resource type="Resource" uid="uid://dvvujptcnjwrp" path="res://Scripts/Resources/StatusEffects/StrengthStatusEffect.tres" id="15_phvs6"]
 
 [sub_resource type="Resource" id="Resource_t1pmm"]
 script = ExtResource("5_kyj8s")
@@ -16,7 +24,7 @@ value = true
 [sub_resource type="Resource" id="Resource_d107k"]
 script = ExtResource("6_x5w80")
 type = 0
-amount = 2.0
+amount = 1.0
 operation = 0
 modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_t1pmm")])
 
@@ -24,27 +32,84 @@ modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/B
 script = ExtResource("5_84ocy")
 id = "heavy_hitter"
 name = "Heavy Hitter"
+description = "All player attacks deal 1 extra damage"
 modifiers = Array[ExtResource("6_x5w80")]([SubResource("Resource_d107k")])
-triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
+triggers = Array[ExtResource("9_yjwqv")]([])
 
 [sub_resource type="Resource" id="Resource_qthe8"]
 script = ExtResource("5_kyj8s")
 condition_type = 3
 value = true
 
+[sub_resource type="Resource" id="Resource_axl6s"]
+script = ExtResource("8_8t20a")
+status_effect = ExtResource("9_4vm7h")
+condition_type = 0
+apply_to_buffs = false
+
 [sub_resource type="Resource" id="Resource_qw2la"]
 script = ExtResource("6_x5w80")
 type = 4
 amount = 2.0
 operation = 1
-modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_qthe8")])
+modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_qthe8"), SubResource("Resource_axl6s")])
 
 [sub_resource type="Resource" id="Resource_qqn47"]
 script = ExtResource("5_84ocy")
 id = "stunner"
 name = "stunner_artifact"
+description = "Stun effect have double duration"
 modifiers = Array[ExtResource("6_x5w80")]([SubResource("Resource_qw2la")])
-triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
+triggers = Array[ExtResource("9_yjwqv")]([])
+
+[sub_resource type="Resource" id="Resource_dlrfn"]
+script = ExtResource("8_5qk2g")
+phase = 0
+
+[sub_resource type="Resource" id="Resource_vj84m"]
+script = ExtResource("10_evv31")
+type = 0
+value = 1.0
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+
+[sub_resource type="Resource" id="Resource_ost22"]
+script = ExtResource("9_yjwqv")
+trigger_action_type = 12
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_dlrfn")])
+target = 4
+triggered_actions = Array[ExtResource("10_evv31")]([SubResource("Resource_vj84m")])
+trigger_actor = 0
+
+[sub_resource type="Resource" id="Resource_tpa3h"]
+script = ExtResource("5_84ocy")
+id = "fastest_drawer_in_the_west"
+name = "Fastest Drawer"
+description = "Start battle by dealing 1 damage to all enemies"
+modifiers = Array[ExtResource("6_x5w80")]([])
+triggers = Array[ExtResource("9_yjwqv")]([SubResource("Resource_ost22")])
+
+[sub_resource type="Resource" id="Resource_pt8xx"]
+script = ExtResource("13_d47oe")
+status_effect = ExtResource("15_phvs6")
+type = 3
+value = 3.0
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+
+[sub_resource type="Resource" id="Resource_0rggk"]
+script = ExtResource("9_yjwqv")
+trigger_action_type = 3
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+target = 0
+triggered_actions = Array[ExtResource("10_evv31")]([SubResource("Resource_pt8xx")])
+trigger_actor = 1
+
+[sub_resource type="Resource" id="Resource_6lgw1"]
+script = ExtResource("5_84ocy")
+id = "i_am_stronk"
+name = "I am STRONK"
+description = "Begin every combat with 3 Strength"
+modifiers = Array[ExtResource("6_x5w80")]([])
+triggers = Array[ExtResource("9_yjwqv")]([SubResource("Resource_0rggk")])
 
 [node name="Node2D" type="Node2D"]
 
@@ -53,4 +118,4 @@ script = ExtResource("1_rtubh")
 starterDeck = ExtResource("2_r0d0j")
 playerCharacter = ExtResource("3_ueskh")
 testBattle = ExtResource("4_dkeru")
-starterArtifacts = Array[ExtResource("5_84ocy")]([SubResource("Resource_qk3ep"), SubResource("Resource_qqn47")])
+starterArtifacts = Array[ExtResource("5_84ocy")]([SubResource("Resource_qk3ep"), SubResource("Resource_qqn47"), SubResource("Resource_tpa3h"), ExtResource("13_uegqh"), SubResource("Resource_6lgw1")])

@@ -5,5 +5,8 @@
 
 [resource]
 script = ExtResource("2_085i0")
-type = 0
+name = "Strength"
+description = "Character deals an additional 2 damage to their attacks"
 modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([ExtResource("1_a4454")])
+triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
+isBuff = true

@@ -15,10 +15,10 @@ func is_alive():
 func _init(baseData:BaseCharacterData):
 	self.base_data = baseData
 	current_hp = baseData.max_hp
-	var idx = 0
-	for statusEffectData in baseData.starting_status_effects:
+	for idx in range(baseData.starting_status_effects.size()):
+		var statusEffectData=baseData.starting_status_effects[idx]
+		var statusEffectTurns=baseData.starting_status_effects_turns[idx]
 		current_status_effects.append(\
-			BaseStatusEffectInstance.new(statusEffectData,baseData.starting_status_effects_turns[idx])\
+			BaseStatusEffectInstance.new(statusEffectData,statusEffectTurns,self)\
 		)
-		idx += 1
 

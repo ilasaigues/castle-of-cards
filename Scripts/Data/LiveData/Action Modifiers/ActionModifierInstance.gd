@@ -24,22 +24,44 @@ func is_valid(context:ActionContext):
 			valid = valid and check_number_condition(context, condition)
 		if condition is PhaseConditionData:
 			valid = valid and check_phase_condition(context, condition)
+		if condition is StatusEffectConditionData:
+			valid = valid and check_status_effect_condition(context, condition)
 	return valid
 
+func check_status_effect_condition(context: ActionContext, condition: StatusEffectConditionData):
+	match condition.condition_type:
+		Enums.StatusEffectConditionType.StatusEffectAppliedIs:
+			return context.action_instance is ApplyStatusActionInstance and \
+				context.action_instance.base_action.status_effect == condition.status_effect
+		Enums.StatusEffectConditionType.StatusEffectAppliedIsBuff:
+			return context.action_instance is ApplyStatusActionInstance and \
+				context.action_instance.base_action.status_effect.isBuff == condition.apply_to_buffs
+		Enums.StatusEffectConditionType.TargetHasStatusEffect:
+			return context.current_target_eval != null and \
+				context.current_target_eval.current_status_effects\
+					.any(func(se:BaseStatusEffectInstance): se.base_data == condition.status_effect)
+		Enums.StatusEffectConditionType.ActorHasStatusEffect:
+			return context.actor.current_status_effects\
+				.any(func(se:BaseStatusEffectInstance): se.base_data == condition.status_effect)
+		
 func check_bool_condition(context:ActionContext, condition:BoolConditionData):
 	match condition.condition_type:
 		# I don't this will be useful
 		Enums.BoolConditionType.TargetIsDead:
 			return context.targets.any(func(t: CharacterInstance): t.is_alive())
 		Enums.BoolConditionType.ActorIsAffected:
+			if context.actor == null: return false
 			return source is BaseStatusEffectInstance\
 				&& context.actor.current_status_effects.has(source)
 		Enums.BoolConditionType.TargetIsAffected:		
-			return source is BaseStatusEffectInstance\
-				&& context.targets.any(func(t: CharacterInstance): return t.current_status_effects.has(source))
+			return source is BaseStatusEffectInstance and \
+				context.current_target_eval != null and \
+				context.current_target_eval.current_status_effects.has(source)
 		Enums.BoolConditionType.ActorIsPlayer:
+			if context.actor == null: return false
 			return context.actor.base_data.is_player
 		Enums.BoolConditionType.ActorIsAlly:
+			if context.actor == null: return false
 			return context.actor.base_data.is_player == context.target.base_data.is_player
 	
 func check_number_condition(context:ActionContext, condition:NumberConditionData):

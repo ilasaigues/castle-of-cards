@@ -10,9 +10,8 @@ func _init(base_data:BaseArtifactData):
 	self.baseData = base_data
 	for baseMod in baseData.modifiers:
 		mods.append(ActionModifierInstance.new(self, baseMod))
-		
 	for baseTriger in baseData.triggers:
-		triggers.append(BaseTriggerInstance.new(baseTriger))
+		triggers.append(BaseTriggerInstance.new(self, baseTriger))
 
 func get_modifiers() -> Array[ActionModifierInstance]:
 	return mods

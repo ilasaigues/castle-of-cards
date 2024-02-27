@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="BaseStatusEffectData" load_steps=9 format=3 uid="uid://b7xkvjvof77t1"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectData.gd" id="1_1ybvr"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/PhaseConditionData.gd" id="2_lw2ir"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseTriggerData.gd" id="3_nt5nr"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectActionData.gd" id="4_ubfb5"]
+[ext_resource type="Resource" uid="uid://d1uswrkeq5y8o" path="res://Scripts/Resources/StatusEffects/HypedUpStatusEffect.tres" id="5_2naxl"]
+
+[sub_resource type="Resource" id="Resource_7oh61"]
+script = ExtResource("2_lw2ir")
+phase = 0
+
+[sub_resource type="Resource" id="Resource_nlojn"]
+script = ExtResource("4_ubfb5")
+status_effect = ExtResource("5_2naxl")
+type = 3
+value = 10.0
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+
+[sub_resource type="Resource" id="Resource_2viwu"]
+script = ExtResource("3_nt5nr")
+trigger_action_type = 3
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_7oh61")])
+target = 5
+triggered_actions = Array[Resource("res://Scripts/Data/BaseData/BaseActionData.gd")]([SubResource("Resource_nlojn")])
+trigger_actor = 2
+
+[resource]
+script = ExtResource("1_1ybvr")
+name = "Commander"
+description = "At the beggining of the battle, apply 1 Hyped Up to all allies. When another ally is spawned, apply 1 Hype Up to them.. "
+modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
+triggers = Array[ExtResource("3_nt5nr")]([SubResource("Resource_2viwu")])
+isBuff = true
