@@ -42,6 +42,7 @@ enum BoolConditionType
 	ActorIsAffected,
 	TargetIsAffected,
 	ActorIsPlayer,
+	TargetIsPlayer,
 	ActorIsAlly,
 	# TODO: check this. It's supposed to be used for triggers right? When player draws
 	# a card out of turn
@@ -77,6 +78,7 @@ enum GamePhase
 	TurnStart,
 	DrawStart,
 	ActiveTurn,
+	ResponsePhase,
 	TurnEnd,
 	GameOver,
 }
@@ -117,7 +119,8 @@ enum TriggerActor
 {
 	ArtifactTriggerByPlayer,
 	ArtifactTriggerByEnvironment,
-	StatusEffect
+	StatusEffect,
+	StatusEffectEnvironment
 }
 
 # Modifies how a modifier changes the values it is modifying.
@@ -127,4 +130,12 @@ enum OperationType
 	Additive,
 	Multiplicative,
 	Override
+}
+
+enum ValueType 
+{
+	Default,
+	XCurrEnergy,
+	XCurrResult,
+	XCurrCards
 }

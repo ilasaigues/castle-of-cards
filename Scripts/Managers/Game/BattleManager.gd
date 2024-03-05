@@ -1,7 +1,7 @@
 extends Node
 class_name BattleManager
 
-var battleData:BaseBattleData
+var BattleData:BaseBattleData
 
 var DeckMngr:DeckManager
 var HandMngr:HandManager
@@ -12,13 +12,13 @@ var enemies: Array[CharacterInstance]
 
 # Initializes default data
 func StartBattle(gameManager:GameManager, deckManager:DeckManager, battleData:BaseBattleData):
-	self.battleData=battleData
+	self.BattleData = battleData
 	DeckMngr = deckManager
 	GameMngr = gameManager
 	HandMngr = HandManager.new()
 	HandMngr.start_new_game(deckManager,GameMngr)
 	print("Instantiate enemies")
-	for data in battleData.enemies:
+	for data in self.BattleData.enemies:
 		enemies.append(CharacterInstance.new(data))
 		var printStr:String = "Enemy instantiated. \n"
 		for se in data.starting_status_effects:
@@ -28,44 +28,57 @@ func StartBattle(gameManager:GameManager, deckManager:DeckManager, battleData:Ba
 # Runs through the initial phase of starting a battle
 func StartPhase():
 	print("Start phase started")
-	
+	self.RunArtifactsAndStatusEffectsTriggers(Enums.GamePhase.BattleStart)
+	print("Start phase ended")
+
+func StartTurn():
+	print("Turn phase started")
+	self.RunArtifactsAndStatusEffectsTriggers(Enums.GamePhase.TurnStart)
+	print("Turn phase start ended")
+
+func PlayCard(cardIdx:int, targets:Array[CharacterInstance]):
+	print("Active turn phase started")
+	var actionContext:ActionContext = self.HandMngr.play_card(cardIdx, targets)
+	self.RunArtifactsAndStatusEffectsTriggers(Enums.GamePhase.ActiveTurn, actionContext)
+	print("Active turn phase ended")
+
+func EndTurn():
+	pass
+
+func RunArtifactsAndStatusEffectsTriggers(phase:Enums.GamePhase,previousAction:ActionContext=null):
 	var actions:Array[BaseActionInstance] = []
 	var currentStatusEffects = []
-	for character in enemies:
+	var playerCharacter:CharacterInstance = GameMngr.PlayerCharacter
+	
+	for character in enemies + [playerCharacter]:
 		currentStatusEffects.append_array(character.current_status_effects)
 		for se in character.current_status_effects:
-			# Submit an action coreography reflecting the status effect inflictedk
+			var seTriggerActions:Array[BaseActionInstance]=[]
 			for trigger in se.triggers:
-				actions.append_array(trigger.GetTriggeredActions(Enums.GamePhase.BattleStart, null, self))
+				seTriggerActions.append_array(trigger.GetTriggeredActions(phase, previousAction, self))
+				
+			if seTriggerActions.size() == 0: continue
 
-	# Artifact SE interactions:
-	# - some artifacts can induce status effects
-	# - artifacts may deal damage base on status effects?
-	# 	- we can make an argument against artifacts that have StartPhase conditionals
-	#	with actions that have conditionals. Maybe Artifacts with start phase triggers
-	#	should not execute conditioned actions
-	# - however, actions from start phase artifacts can be modified by status effects (strength)
-	#	 - we can make an argument against having this artifacts ignore player SE.
-	#	 and enemies too?
-		
-		
+			actions.append_array(seTriggerActions)
+			print("Creating Trigger actions for Status Effect %s #(%s)" % [se.base_data.name, seTriggerActions.size()])
+
 	for artifact in GameMngr.ArtifactMngr.Artifacts:
 		var triggers=artifact.get_triggers()
 		
-		var artifactTriggerActions:Array[BaseActionInstance]
+		var artifactTriggerActions:Array[BaseActionInstance]=[]
 		for trigger in triggers:
-			artifactTriggerActions.append_array(trigger.GetTriggeredActions(Enums.GamePhase.BattleStart, null, self))
+			artifactTriggerActions.append_array(trigger.GetTriggeredActions(phase, previousAction, self))
 		
 		if artifactTriggerActions.size() == 0: continue
 		
+		print("Creating Trigger actions for artifact %s #(%s)" % [artifact.baseData.name, artifactTriggerActions.size()])
 		actions.append_array(artifactTriggerActions)
-		print("Instantiating (but not running) artifact's %s triggers (%s), actions (%s). Artifact description: %s" % \
-			[artifact.baseData.name,triggers.size(), artifactTriggerActions.size(), artifact.baseData.description])
+	print("\n")
 	
 	var actionQueue:Array[BaseActionInstance] = []
 	actionQueue.append_array(actions)
 	
-	# Dont you fucking date touch this. This is the closes thing to a child I'll ever have
+	# Dont you fucking dare touch this. This is the closes thing to a child I'll ever have
 	while !actionQueue.is_empty():
 		self.SortByStatusEffectModifierAndTriggers(actionQueue)
 	
@@ -81,41 +94,11 @@ func StartPhase():
 				)\
 			)
 			
-		var newActions = []
 		for se in newStatusEffects:
 			currentStatusEffects.append(se)
 			for trigger in se.triggers:
-				actionQueue.append_array(trigger.GetTriggeredActions(Enums.GamePhase.BattleStart, null, self))
+				actionQueue.append_array(trigger.GetTriggeredActions(phase, previousAction, self))
 				
-	print("Start phase ended")
-
-func StartTurn():
-	print("Turn phase started")
-	for character in enemies:
-		for se in character.current_status_effects:
-			# Submit an action coreography reflecting the status effect inflicted
-			continue
-	
-	for artifact in GameMngr.ArtifactMngr.Artifacts:
-		var triggers=artifact.get_triggers()
-		
-		# Triggers are executed iteratively and not interact between each other.
-		# Pray to your gods we don't create initial status effects or artifacts with
-		# interactions between each other that depend on the order
-		var actions = []
-		for trigger in triggers:
-			actions.append_array(trigger.GetTriggeredActions(Enums.GamePhase.BattleStart, null, self))
-		
-		if actions.size() == 0: continue
-		
-		print("Running artifact %s triggers (%s), actions (%s). Artifact description: %s" % \
-			[artifact.baseData.name,triggers.size(), actions.size(), artifact.baseData.description])
-		for action in actions:
-			action.Execute()
-	
-	print("Start phase ended")
-
-	
 # This is absolutely cursed but, it works to a reasonable degree. Please, don't dare to touch it ;
 func SortByStatusEffectModifierAndTriggers(actions:Array[BaseActionInstance]):
 	actions.sort_custom(func(a1, a2): \

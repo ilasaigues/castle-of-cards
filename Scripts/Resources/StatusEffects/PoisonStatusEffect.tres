@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("2_1gp6p")
 name = "Poison"
+description = ""
 modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
 triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
 isBuff = false

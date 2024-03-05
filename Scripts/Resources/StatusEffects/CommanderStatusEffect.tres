@@ -1,20 +1,27 @@
-[gd_resource type="Resource" script_class="BaseStatusEffectData" load_steps=9 format=3 uid="uid://b7xkvjvof77t1"]
+[gd_resource type="Resource" script_class="BaseStatusEffectData" load_steps=11 format=3 uid="uid://b7xkvjvof77t1"]
 
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectData.gd" id="1_1ybvr"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/PhaseConditionData.gd" id="2_lw2ir"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseTriggerData.gd" id="3_nt5nr"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectActionData.gd" id="4_ubfb5"]
 [ext_resource type="Resource" uid="uid://d1uswrkeq5y8o" path="res://Scripts/Resources/StatusEffects/HypedUpStatusEffect.tres" id="5_2naxl"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="6_q4yt4"]
 
 [sub_resource type="Resource" id="Resource_7oh61"]
 script = ExtResource("2_lw2ir")
 phase = 0
 
-[sub_resource type="Resource" id="Resource_nlojn"]
+[sub_resource type="Resource" id="Resource_shu1w"]
+script = ExtResource("6_q4yt4")
+value = 1.0
+valueType = 0
+operation = 0
+
+[sub_resource type="Resource" id="Resource_5kaa2"]
 script = ExtResource("4_ubfb5")
 status_effect = ExtResource("5_2naxl")
 type = 3
-value = 10.0
+value = SubResource("Resource_shu1w")
 conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
 
 [sub_resource type="Resource" id="Resource_2viwu"]
@@ -22,7 +29,7 @@ script = ExtResource("3_nt5nr")
 trigger_action_type = 3
 conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_7oh61")])
 target = 5
-triggered_actions = Array[Resource("res://Scripts/Data/BaseData/BaseActionData.gd")]([SubResource("Resource_nlojn")])
+triggered_actions = Array[Resource("res://Scripts/Data/BaseData/BaseActionData.gd")]([SubResource("Resource_5kaa2")])
 trigger_actor = 2
 
 [resource]

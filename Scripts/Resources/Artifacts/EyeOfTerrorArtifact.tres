@@ -1,20 +1,27 @@
-[gd_resource type="Resource" script_class="BaseArtifactData" load_steps=9 format=3 uid="uid://iujm04rktl37"]
+[gd_resource type="Resource" script_class="BaseArtifactData" load_steps=11 format=3 uid="uid://iujm04rktl37"]
 
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseArtifactData.gd" id="1_3e1hr"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/PhaseConditionData.gd" id="2_rq1of"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseTriggerData.gd" id="3_7hrgh"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectActionData.gd" id="4_0foki"]
 [ext_resource type="Resource" uid="uid://cp834i55ncpsg" path="res://Scripts/Resources/StatusEffects/TerrifierStatusEffect.tres" id="5_rbhq0"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="6_ug1dt"]
 
 [sub_resource type="Resource" id="Resource_g7ho4"]
 script = ExtResource("2_rq1of")
 phase = 0
 
-[sub_resource type="Resource" id="Resource_cn6vg"]
+[sub_resource type="Resource" id="Resource_lhcxd"]
+script = ExtResource("6_ug1dt")
+value = 10.0
+valueType = 0
+operation = 0
+
+[sub_resource type="Resource" id="Resource_sj4in"]
 script = ExtResource("4_0foki")
 status_effect = ExtResource("5_rbhq0")
 type = 3
-value = 12.0
+value = SubResource("Resource_lhcxd")
 conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
 
 [sub_resource type="Resource" id="Resource_00dhl"]
@@ -22,7 +29,7 @@ script = ExtResource("3_7hrgh")
 trigger_action_type = 3
 conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_g7ho4")])
 target = 0
-triggered_actions = Array[Resource("res://Scripts/Data/BaseData/BaseActionData.gd")]([SubResource("Resource_cn6vg")])
+triggered_actions = Array[Resource("res://Scripts/Data/BaseData/BaseActionData.gd")]([SubResource("Resource_sj4in")])
 trigger_actor = 1
 
 [resource]

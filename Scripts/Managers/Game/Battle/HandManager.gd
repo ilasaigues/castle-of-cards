@@ -35,7 +35,7 @@ func start_new_game(deckManager:DeckManager, gameManager:GameManager):
 
 	
 # Return void for now
-func play_card(index: int, targets: Array[CharacterInstance]):
+func play_card(index: int, targets: Array[CharacterInstance]) -> ActionContext:
 	var card = hand[index]
 	var cardData : BaseCardData = card.base_data
 	# Debug
@@ -58,10 +58,11 @@ func play_card(index: int, targets: Array[CharacterInstance]):
 	currentEnergy = currentEnergy - card.current_cost
 	
 	for baseAction in cardData.action_list:
-		var actionInstance = BaseActionInstance.GetActionInstance(baseAction,actionContext)
+		var actionInstance = BaseActionInstance.GetActionInstance(baseAction,actionContext,GameMngr.BattleMngr)
 		actionInstance.Execute()
 		actionContext.current_target_eval = null
 	
+	return actionContext
 
 # Also should go in a TurnManager. The idea behind this is to have a pre-play
 # phase where a card is selected, the targets (potential targets) are highlighted,

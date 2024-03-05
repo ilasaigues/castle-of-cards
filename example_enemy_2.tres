@@ -1,16 +1,17 @@
-[gd_resource type="Resource" script_class="BaseCharacterData" load_steps=6 format=3 uid="uid://ltrjyfbp24vd"]
+[gd_resource type="Resource" script_class="BaseCharacterData" load_steps=7 format=3 uid="uid://ltrjyfbp24vd"]
 
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseCharacterData.gd" id="1_gsujk"]
 [ext_resource type="Resource" uid="uid://bee5mqx7ftf6g" path="res://Scripts/Resources/StatusEffects/FragilityStatusEffect.tres" id="2_cpicg"]
 [ext_resource type="Resource" uid="uid://dvvujptcnjwrp" path="res://Scripts/Resources/StatusEffects/StrengthStatusEffect.tres" id="3_visg7"]
 [ext_resource type="Resource" uid="uid://b1eqiack3v3xu" path="res://Scripts/Resources/StatusEffects/DiseaseStatusEffect.tres" id="4_qfvw7"]
 [ext_resource type="Resource" uid="uid://b7xkvjvof77t1" path="res://Scripts/Resources/StatusEffects/CommanderStatusEffect.tres" id="5_7gcqp"]
+[ext_resource type="Resource" uid="uid://r0t6o8g7nc4d" path="res://Scripts/Resources/StatusEffects/ParryStatusEffect.tres" id="6_38dtu"]
 
 [resource]
 script = ExtResource("1_gsujk")
 id = "dummyChar"
-name = "Dummy"
-max_hp = 10
-starting_status_effects = Array[Resource("res://Scripts/Data/BaseData/BaseStatusEffectData.gd")]([ExtResource("2_cpicg"), ExtResource("3_visg7"), ExtResource("4_qfvw7"), ExtResource("5_7gcqp")])
-starting_status_effects_turns = Array[int]([3, 2, 1, 5])
+name = "Enemy 2"
+max_hp = 20
+starting_status_effects = Array[Resource("res://Scripts/Data/BaseData/BaseStatusEffectData.gd")]([ExtResource("2_cpicg"), ExtResource("3_visg7"), ExtResource("4_qfvw7"), ExtResource("5_7gcqp"), ExtResource("6_38dtu")])
+starting_status_effects_turns = Array[int]([3, 2, 1, 5, 2])
 is_player = false

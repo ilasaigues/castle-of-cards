@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="BaseArtifactData" load_steps=10 format=3 uid="uid://b023weduykmp7"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseArtifactData.gd" id="1_uhydi"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/PhaseConditionData.gd" id="2_5iiax"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseTriggerData.gd" id="3_q3xra"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="4_loflp"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="5_wr0pf"]
+
+[sub_resource type="Resource" id="Resource_dlrfn"]
+script = ExtResource("2_5iiax")
+phase = 0
+
+[sub_resource type="Resource" id="Resource_85g00"]
+script = ExtResource("5_wr0pf")
+value = 1.0
+valueType = 0
+operation = 0
+
+[sub_resource type="Resource" id="Resource_vj84m"]
+script = ExtResource("4_loflp")
+type = 0
+value = SubResource("Resource_85g00")
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+
+[sub_resource type="Resource" id="Resource_ost22"]
+script = ExtResource("3_q3xra")
+trigger_action_type = 12
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_dlrfn")])
+target = 4
+triggered_actions = Array[ExtResource("4_loflp")]([SubResource("Resource_vj84m")])
+trigger_actor = 0
+
+[resource]
+script = ExtResource("1_uhydi")
+id = "fastest_drawer_in_the_west"
+name = "Fastest Drawer"
+description = "Start battle by dealing 1 damage to all enemies"
+modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
+triggers = Array[ExtResource("3_q3xra")]([SubResource("Resource_ost22")])

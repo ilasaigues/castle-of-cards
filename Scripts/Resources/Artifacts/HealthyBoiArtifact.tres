@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="BaseArtifactData" load_steps=10 format=3 uid="uid://ct4hk6xdtqytv"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseArtifactData.gd" id="1_dwmst"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseTriggerData.gd" id="2_p4r6f"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/PhaseConditionData.gd" id="2_xr7md"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="4_lqxb0"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="5_8atc1"]
+
+[sub_resource type="Resource" id="Resource_kbvse"]
+script = ExtResource("2_xr7md")
+phase = 1
+
+[sub_resource type="Resource" id="Resource_dlh21"]
+script = ExtResource("5_8atc1")
+value = 3.0
+valueType = 0
+operation = 0
+
+[sub_resource type="Resource" id="Resource_5xwwi"]
+script = ExtResource("4_lqxb0")
+type = 1
+value = SubResource("Resource_dlh21")
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+
+[sub_resource type="Resource" id="Resource_2gpej"]
+script = ExtResource("2_p4r6f")
+trigger_action_type = 1
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_kbvse")])
+target = 0
+triggered_actions = Array[ExtResource("4_lqxb0")]([SubResource("Resource_5xwwi")])
+trigger_actor = 1
+
+[resource]
+script = ExtResource("1_dwmst")
+id = "healthy_boi"
+name = "Healthy Boi"
+description = "At the start of the player's turn, restore 3 health"
+modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
+triggers = Array[ExtResource("2_p4r6f")]([SubResource("Resource_2gpej")])

@@ -12,17 +12,17 @@ var result: int
 #var source_trigger:TriggerInstance
 
 func _init(
-	phase:Enums.GamePhase,
-	actor:CharacterInstance,
-	targets:Array[CharacterInstance],
-	source_card:CardInstance,
-	artifacts:Array[ArtifactInstance]
+	initPhase:Enums.GamePhase,
+	initActor:CharacterInstance,
+	initTargets:Array[CharacterInstance],
+	initSourceCard:CardInstance,
+	initArtifacts:Array[ArtifactInstance]
 	):
-	self.phase=phase
-	self.actor=actor
-	self.targets=targets
-	self.source_card=source_card
-	self.artifacts=artifacts
+	self.phase=initPhase
+	self.actor=initActor
+	self.targets=initTargets
+	self.source_card=initSourceCard
+	self.artifacts=initArtifacts
 
 func setCurrentTarget(idx: int) -> CharacterInstance:
 	if idx < 0 or idx >= self.targets.size(): printerr("Action context invalid target setting")

@@ -1,11 +1,12 @@
-[gd_resource type="Resource" script_class="BaseDeckData" load_steps=6 format=3 uid="uid://7g8gnvoct67x"]
+[gd_resource type="Resource" script_class="BaseDeckData" load_steps=7 format=3 uid="uid://7g8gnvoct67x"]
 
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseDeckData.gd" id="1_6jkki"]
 [ext_resource type="Resource" uid="uid://c765df01yedcd" path="res://strike_card.tres" id="1_icomq"]
+[ext_resource type="Resource" uid="uid://bja0bhfna3n5g" path="res://hand_strike_card.tres" id="2_kkdpd"]
 [ext_resource type="Resource" uid="uid://58vximi7k1dn" path="res://heal_card.tres" id="2_plbub"]
 [ext_resource type="Resource" uid="uid://8je7a82fr144" path="res://stun_strike_card.tres" id="3_ypyyf"]
 [ext_resource type="Resource" uid="uid://cqcvlmnewyox5" path="res://poison_sting_card.tres" id="4_etnan"]
 
 [resource]
 script = ExtResource("1_6jkki")
-cards = Array[Resource("res://Scripts/Data/BaseData/BaseCardData.gd")]([ExtResource("1_icomq"), ExtResource("1_icomq"), ExtResource("2_plbub"), ExtResource("3_ypyyf"), ExtResource("4_etnan")])
+cards = Array[Resource("res://Scripts/Data/BaseData/BaseCardData.gd")]([ExtResource("1_icomq"), ExtResource("2_kkdpd"), ExtResource("2_plbub"), ExtResource("3_ypyyf"), ExtResource("4_etnan")])

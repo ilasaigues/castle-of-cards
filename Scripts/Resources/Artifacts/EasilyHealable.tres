@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="BaseArtifactData" load_steps=6 format=3 uid="uid://b58ycpr3l8yrx"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/BoolConditionData.gd" id="1_p8hvi"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionModifierData.gd" id="2_3tnk7"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseArtifactData.gd" id="3_3dshh"]
+
+[sub_resource type="Resource" id="Resource_6mu2r"]
+script = ExtResource("1_p8hvi")
+condition_type = 4
+boolConditionValue = false
+
+[sub_resource type="Resource" id="Resource_8o1ye"]
+script = ExtResource("2_3tnk7")
+type = 1
+amount = 4.0
+operation = 0
+modifier_conditionals = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_6mu2r")])
+
+[resource]
+script = ExtResource("3_3dshh")
+id = "easily_healable"
+name = "Easily Healable"
+description = "When player is healed, the value is increased by 4"
+modifiers = Array[ExtResource("2_3tnk7")]([SubResource("Resource_8o1ye")])
+triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])

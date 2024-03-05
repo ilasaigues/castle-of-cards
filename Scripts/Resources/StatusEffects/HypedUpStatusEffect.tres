@@ -13,7 +13,7 @@ apply_to_buffs = false
 [sub_resource type="Resource" id="Resource_1y5ma"]
 script = ExtResource("1_o510b")
 condition_type = 2
-value = true
+boolConditionValue = false
 
 [sub_resource type="Resource" id="Resource_33013"]
 script = ExtResource("2_y7y8a")

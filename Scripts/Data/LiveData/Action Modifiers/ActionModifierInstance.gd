@@ -39,10 +39,10 @@ func check_status_effect_condition(context: ActionContext, condition: StatusEffe
 		Enums.StatusEffectConditionType.TargetHasStatusEffect:
 			return context.current_target_eval != null and \
 				context.current_target_eval.current_status_effects\
-					.any(func(se:BaseStatusEffectInstance): se.base_data == condition.status_effect)
+					.any(func(se:BaseStatusEffectInstance): return se.base_data == condition.status_effect)
 		Enums.StatusEffectConditionType.ActorHasStatusEffect:
 			return context.actor.current_status_effects\
-				.any(func(se:BaseStatusEffectInstance): se.base_data == condition.status_effect)
+				.any(func(se:BaseStatusEffectInstance): return se.base_data == condition.status_effect)
 		
 func check_bool_condition(context:ActionContext, condition:BoolConditionData):
 	match condition.condition_type:
@@ -60,6 +60,9 @@ func check_bool_condition(context:ActionContext, condition:BoolConditionData):
 		Enums.BoolConditionType.ActorIsPlayer:
 			if context.actor == null: return false
 			return context.actor.base_data.is_player
+		Enums.BoolConditionType.TargetIsPlayer:
+			return context.current_target_eval != null and \
+				context.current_target_eval.base_data.is_player
 		Enums.BoolConditionType.ActorIsAlly:
 			if context.actor == null: return false
 			return context.actor.base_data.is_player == context.target.base_data.is_player
@@ -73,9 +76,9 @@ func check_number_condition(context:ActionContext, condition:NumberConditionData
 			print_rich("[color=#FF0000]ERROR: ARTIFACT CONDITION IN NON-ARTIFACT MODIFIER[/color]")
 			return false
 		Enums.NumberConditionType.TargetHPLessThan:
-			return context.target.current_hp < self.amount
+			return context.target.current_hp < condition.numberConditionValue
 		Enums.NumberConditionType.ActorHPLessThan:
-			return context.actor.current_hp < self.amount
+			return context.actor.current_hp < condition.numberConditionValue
 	
 func check_phase_condition(context:ActionContext, condition:PhaseConditionData):
 	return context.phase == condition.phase

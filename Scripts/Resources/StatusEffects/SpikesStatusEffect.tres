@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="BaseStatusEffectData" load_steps=14 format=3 uid="uid://chdrxy77mkw0h"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectData.gd" id="1_51sii"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/TriggerConditionData.gd" id="2_vv12d"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseTriggerData.gd" id="3_j7tpx"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/PhaseConditionData.gd" id="3_x2mmr"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/NumberConditionData.gd" id="4_5o55f"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="4_7d8t8"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="7_pr4x6"]
+
+[sub_resource type="Resource" id="Resource_y2hso"]
+script = ExtResource("2_vv12d")
+condition_type = 1
+actionType = 0
+triggerConditionValue = 0
+
+[sub_resource type="Resource" id="Resource_0gt0s"]
+script = ExtResource("3_x2mmr")
+phase = 4
+
+[sub_resource type="Resource" id="Resource_bj5fo"]
+script = ExtResource("4_5o55f")
+condition_type = 1
+numberConditionValue = 20.0
+
+[sub_resource type="Resource" id="Resource_lvejd"]
+script = ExtResource("7_pr4x6")
+value = 3.0
+valueType = 0
+operation = 0
+
+[sub_resource type="Resource" id="Resource_2kqa2"]
+script = ExtResource("4_7d8t8")
+type = 0
+value = SubResource("Resource_lvejd")
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+
+[sub_resource type="Resource" id="Resource_nfp5a"]
+script = ExtResource("3_j7tpx")
+trigger_action_type = 0
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_y2hso"), SubResource("Resource_0gt0s"), SubResource("Resource_bj5fo")])
+target = 1
+triggered_actions = Array[ExtResource("4_7d8t8")]([SubResource("Resource_2kqa2")])
+trigger_actor = 3
+
+[resource]
+script = ExtResource("1_51sii")
+name = "Spikes"
+description = "After attacking this target, if remaining current hp is 20, 2 damage is dealt back "
+modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
+triggers = Array[ExtResource("3_j7tpx")]([SubResource("Resource_nfp5a")])
+isBuff = false

@@ -2,4 +2,4 @@ extends BaseConditionData
 class_name NumberConditionData
 
 @export var condition_type:Enums.NumberConditionType
-@export var value:float
+@export var numberConditionValue:float

@@ -1,22 +1,29 @@
-[gd_resource type="Resource" script_class="BaseCardData" load_steps=8 format=3 uid="uid://cqcvlmnewyox5"]
+[gd_resource type="Resource" script_class="BaseCardData" load_steps=10 format=3 uid="uid://cqcvlmnewyox5"]
 
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/StatusEffectConditionData.gd" id="1_w74l3"]
 [ext_resource type="Resource" uid="uid://bgnkspn17vo74" path="res://Scripts/Resources/StatusEffects/StunStatusEffect.tres" id="2_nhnmw"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectActionData.gd" id="3_q0dye"]
 [ext_resource type="Resource" uid="uid://b1b54l0tac8u3" path="res://Scripts/Resources/StatusEffects/PoisonStatusEffect.tres" id="4_dm67x"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseCardData.gd" id="5_rj30f"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="5_u6rsw"]
 
 [sub_resource type="Resource" id="Resource_f5trj"]
 script = ExtResource("1_w74l3")
 status_effect = ExtResource("2_nhnmw")
-condition_type = 1
-is_buff = false
+condition_type = 2
+apply_to_buffs = false
+
+[sub_resource type="Resource" id="Resource_m2kw0"]
+script = ExtResource("5_u6rsw")
+value = 1.0
+valueType = 0
+operation = 0
 
 [sub_resource type="Resource" id="Resource_gjjou"]
 script = ExtResource("3_q0dye")
 status_effect = ExtResource("4_dm67x")
 type = 3
-value = 1.0
+value = SubResource("Resource_m2kw0")
 conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_f5trj")])
 
 [resource]

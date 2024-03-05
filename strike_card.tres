@@ -1,12 +1,19 @@
-[gd_resource type="Resource" script_class="BaseCardData" load_steps=4 format=3 uid="uid://c765df01yedcd"]
+[gd_resource type="Resource" script_class="BaseCardData" load_steps=6 format=3 uid="uid://c765df01yedcd"]
 
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseCardData.gd" id="1_bvxuw"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="1_ith1e"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="2_yphip"]
+
+[sub_resource type="Resource" id="Resource_u70hy"]
+script = ExtResource("2_yphip")
+value = 3.0
+valueType = 0
+operation = 0
 
 [sub_resource type="Resource" id="Resource_jy8xx"]
 script = ExtResource("1_ith1e")
 type = 0
-value = 3.0
+value = SubResource("Resource_u70hy")
 conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
 
 [resource]

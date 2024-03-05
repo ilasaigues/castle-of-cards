@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="BaseArtifactData" load_steps=11 format=3 uid="uid://dh6e60sjgipa"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseArtifactData.gd" id="1_418le"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseTriggerData.gd" id="2_dy10t"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/PhaseConditionData.gd" id="2_gegql"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectActionData.gd" id="3_n14tm"]
+[ext_resource type="Resource" uid="uid://dvvujptcnjwrp" path="res://Scripts/Resources/StatusEffects/StrengthStatusEffect.tres" id="4_e8fuv"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="6_giln3"]
+
+[sub_resource type="Resource" id="Resource_jvif5"]
+script = ExtResource("2_gegql")
+phase = 0
+
+[sub_resource type="Resource" id="Resource_c8lsj"]
+script = ExtResource("6_giln3")
+value = 3.0
+valueType = 0
+operation = 0
+
+[sub_resource type="Resource" id="Resource_kpo00"]
+script = ExtResource("3_n14tm")
+status_effect = ExtResource("4_e8fuv")
+type = 3
+value = SubResource("Resource_c8lsj")
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+
+[sub_resource type="Resource" id="Resource_0rggk"]
+script = ExtResource("2_dy10t")
+trigger_action_type = 3
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_jvif5")])
+target = 0
+triggered_actions = Array[Resource("res://Scripts/Data/BaseData/BaseActionData.gd")]([SubResource("Resource_kpo00")])
+trigger_actor = 1
+
+[resource]
+script = ExtResource("1_418le")
+id = "i_am_stronk"
+name = "I am STRONK"
+description = "Begin every combat with 3 Strength"
+modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
+triggers = Array[ExtResource("2_dy10t")]([SubResource("Resource_0rggk")])

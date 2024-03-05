@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_wuvgj")
 id = "testChar"
-name = "Testy"
-max_hp = 10
+name = "Player"
+max_hp = 20
 starting_status_effects = Array[Resource("res://Scripts/Data/BaseData/BaseStatusEffectData.gd")]([])
 starting_status_effects_turns = Array[int]([3])
 is_player = true

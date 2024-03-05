@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BaseCharacterData" load_steps=4 format=3 uid="uid://cjvajds52ws82"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseCharacterData.gd" id="1_skg8l"]
+[ext_resource type="Resource" uid="uid://dvvujptcnjwrp" path="res://Scripts/Resources/StatusEffects/StrengthStatusEffect.tres" id="3_mylhp"]
+[ext_resource type="Resource" uid="uid://r0t6o8g7nc4d" path="res://Scripts/Resources/StatusEffects/ParryStatusEffect.tres" id="3_yth5k"]
+
+[resource]
+script = ExtResource("1_skg8l")
+id = "dummyChar"
+name = "Enemy 2"
+max_hp = 10
+starting_status_effects = Array[Resource("res://Scripts/Data/BaseData/BaseStatusEffectData.gd")]([ExtResource("3_mylhp"), ExtResource("3_yth5k")])
+starting_status_effects_turns = Array[int]([3])
+is_player = false

@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_35c8k")
 name = "Frightened"
-description = "Character has a 50% chance to remain still during their turn"
+description = "Attacks against this target break their block, regardless of damage dealt"
 modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
 triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
 isBuff = false

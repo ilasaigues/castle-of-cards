@@ -15,10 +15,12 @@ func Execute():
 		print("Status effect action doesn't have status effect data resource assigned")
 	
 	var statusEffectApplied = self.base_action.status_effect
-	
-	print("Applying %s status effect. Initial turn count is %s \n      - %s" % [statusEffectApplied.name, base_action.value, statusEffectApplied.description])
+	var actionValue:int = self.GetInitialValue()
+
+	print("Applying %s status effect. Initial turn count is %s \n      - %s" % \
+		[statusEffectApplied.name, actionValue, statusEffectApplied.description])
 	var modifiers = self.GetActorModifiers(modType)
-	var turns = BaseActionInstance.GetModifiedOutput(base_action.value, modifiers)
+	var turns = BaseActionInstance.GetModifiedOutput(actionValue, modifiers)
 	
 	for tIdx in range(self.action_context.targets.size()):
 		var target = self.action_context.setCurrentTarget(tIdx)
@@ -41,6 +43,6 @@ func Execute():
 			var newStatusEffect=BaseStatusEffectInstance.new(self.base_action.status_effect, turns,target)
 			target.current_status_effects.append(newStatusEffect)
 			
-		print("Final Result (target %s) -> Applied SE %s to target for %s turns" % [tIdx, statusEffectApplied.name, targetTurns])
+		print("Final Result (target %s) -> Applied SE %s to target for %s turns" % [target.base_data.name, statusEffectApplied.name, targetTurns])
 		
 

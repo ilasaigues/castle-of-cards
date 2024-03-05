@@ -12,10 +12,10 @@ var character:CharacterInstance
 func _get_type() -> Enums.StatusEffectType:
 	return base_data.type
 
-func _init(base_data: BaseStatusEffectData, turns: int, character:CharacterInstance):
-	self.base_data=base_data
-	self.turns=turns
-	self.character=character
+func _init(baseData: BaseStatusEffectData, initTurns: int, initCharacter:CharacterInstance):
+	self.base_data=baseData
+	self.turns=initTurns
+	self.character=initCharacter
 	for mod in base_data.modifiers:
 		self.modifiers.append(ActionModifierInstance.new(self, mod))
 	for trigger in base_data.triggers:
@@ -25,5 +25,5 @@ func get_modifiers() -> Array[ActionModifierInstance]:
 	return self.modifiers
 	
 func get_triggers():
-	pass 
+	return self.triggers 
 	

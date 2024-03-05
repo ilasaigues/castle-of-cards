@@ -6,7 +6,7 @@ var conditions:Array[BaseConditionData]
 var target:Enums.TriggerTargetType
 var triggered_actions:Array[BaseActionData]
 var trigger_actor:Enums.TriggerActor
-var source
+var triggerSource
 
 func _init(source, base_data:BaseTriggerData):
 	self.trigger_action_type=base_data.trigger_action_type
@@ -14,44 +14,49 @@ func _init(source, base_data:BaseTriggerData):
 	self.target=base_data.target
 	self.triggered_actions=base_data.triggered_actions
 	self.trigger_actor=base_data.trigger_actor
-	self.source = source
+	self.triggerSource = source
 	
 # Assume that this is called when battle starts. What do I need?
 func GetTriggeredActions(phase:Enums.GamePhase,\
-	actionContext:ActionContext,\
+	previousAction:ActionContext,\
 	battleMngr:BattleManager) -> Array[BaseActionInstance]:
 	
 	# Generate a dummy action context for computing valid triggers such as when
 	# start turn phase begins
-	if actionContext == null:
-		var sourceCharacter: CharacterInstance
+	if previousAction == null:
 		
+		var sourceCharacter: CharacterInstance
 		# Artifacts can have actions that are executed as by the player
 		if self.trigger_actor == Enums.TriggerActor.ArtifactTriggerByPlayer:
 			sourceCharacter=battleMngr.GameMngr.PlayerCharacter
 			
-		actionContext = ActionContext.new(phase, sourceCharacter, [], null, [])
-		
-	if !is_trigger_valid(actionContext): return []
-		
-		
+		previousAction = ActionContext.new(phase, sourceCharacter, [], null, [])
+	
+	if !is_trigger_valid(phase,previousAction): return []
+	
 	var actions:Array[BaseActionInstance]=[]
 	for actionData in self.triggered_actions:
 		# Create a context and execute action ()
-		var actor = actionContext.actor
-		# If source is an arttifact, we will most likely want to animate that,
-		# but we can't while action context reference only character instances
-		if source is BaseStatusEffectInstance: actor = source.character
+		var actor = previousAction.actor
 		
-		var targets = get_trigger_targets(actionContext, battleMngr)
+		# Status effects can create environment actions or character actions.
+		# This changes whether Character status effects are applied
+		if self.triggerSource is BaseStatusEffectInstance: 
+			if self.trigger_actor == Enums.TriggerActor.StatusEffect:
+				actor = self.triggerSource.character
+			if self.trigger_actor == Enums.TriggerActor.StatusEffectEnvironment:
+				actor = null
+		
+		var targets = get_trigger_targets(previousAction, battleMngr)
 		
 		var triggeredActionContext = ActionContext.new(phase,\
 			actor,\
 			targets,\
 			null,\
 			battleMngr.GameMngr.ArtifactMngr.Artifacts)
-			
-		var action = BaseActionInstance.GetActionInstance(actionData,triggeredActionContext)
+		triggeredActionContext.result = previousAction.result
+		
+		var action = BaseActionInstance.GetActionInstance(actionData,triggeredActionContext,battleMngr)
 		actions.append(action)
 		
 	return actions
@@ -67,11 +72,11 @@ func get_trigger_targets(actionContext:ActionContext,battleMngr:BattleManager) -
 			else: targets = [actionContext.actor]
 		Enums.TriggerTargetType.RandomEnemy:
 			var playerEnemies = battleMngr.enemies
-			if source is ArtifactInstance and playerEnemies.size() > 0: 
+			if self.triggerSource is ArtifactInstance and playerEnemies.size() > 0: 
 				var idx = randi() % battleMngr.enemies.size()
 				targets = [playerEnemies[idx]] 
-			elif source is BaseStatusEffectInstance:
-				if source.character == player:
+			elif self.triggerSource is BaseStatusEffectInstance:
+				if self.triggerSource.character == player:
 					if playerEnemies.size() == 0: targets = []
 					var idx = randi() % battleMngr.enemies.size()
 					targets = [playerEnemies[idx]] 
@@ -82,26 +87,26 @@ func get_trigger_targets(actionContext:ActionContext,battleMngr:BattleManager) -
 			targets = [ allTrgts[randi() % allTrgts.size()] ]
 		Enums.TriggerTargetType.AllEnemies:
 			var playerEnemies = battleMngr.enemies
-			if source is ArtifactInstance:
-				targets = battleMngr.enemies 
-			elif source is BaseStatusEffectInstance:
-				if source.character == player:
-					targets = battleMngr.enemies 
+			if self.triggerSource is ArtifactInstance:
+				targets = playerEnemies 
+			elif self.triggerSource is BaseStatusEffectInstance:
+				if self.triggerSource.character == player:
+					targets = playerEnemies 
 				else:
 					targets = [player]
 		Enums.TriggerTargetType.All:
 			targets = [player] + battleMngr.enemies
 		Enums.TriggerTargetType.AllAllies:
-			if source is BaseStatusEffectInstance:
-				if source.character != player:
+			if self.triggerSource is BaseStatusEffectInstance:
+				if self.triggerSource.character != player:
 					targets = battleMngr.enemies.duplicate()
-					targets.erase(source.character)
+					targets.erase(self.triggerSource.character)
 			else:
 				printerr("All allies target artifact should not exist")
 			
 	return targets
 	
-func is_trigger_valid(context:ActionContext) -> bool:
+func is_trigger_valid(phase:Enums.GamePhase,context:ActionContext) -> bool:
 	var valid = true
 	for condition in self.conditions:
 		if condition is BoolConditionData:
@@ -109,7 +114,7 @@ func is_trigger_valid(context:ActionContext) -> bool:
 		if condition is NumberConditionData:
 			valid = valid and check_number_condition(context, condition)
 		if condition is PhaseConditionData:
-			valid = valid and check_phase_condition(context, condition)
+			valid = valid and check_phase_condition(phase, condition)
 		if condition is TriggerConditionData:
 			valid = valid and check_trigger_condition(context, condition)
 	return valid
@@ -129,19 +134,22 @@ func check_bool_condition(context:ActionContext, condition:BoolConditionData) ->
 func check_number_condition(context:ActionContext, condition:NumberConditionData) -> bool:
 	match condition.condition_type:
 		Enums.NumberConditionType.ArtifactCounterEquals:
-			if source is ArtifactInstance:
-				var artifact = source as ArtifactInstance
-				return artifact.count == self.amount
+			if self.triggerSource is ArtifactInstance:
+				var artifact = self.triggerSource as ArtifactInstance
+				return artifact.count == condition.numberConditionValue
 			print_rich("[color=#FF0000]ERROR: ARTIFACT CONDITION IN NON-ARTIFACT MODIFIER[/color]")
 			return false
 		Enums.NumberConditionType.CharacterHPLessThan:
-			return source is BaseStatusEffectInstance and\
-				 source.character.current_target_eval.current_hp < self.amount
+			return self.triggerSource is BaseStatusEffectInstance and\
+				self.triggerSource.character.current_hp < condition.numberConditionValue
+		Enums.NumberConditionType.TargetHPLessThan:
+			return self.triggerSource is BaseStatusEffectInstance and\
+				context.current_target_eval.current_hp < condition.numberConditionValue
 		_:
 			printerr("Trigger number condition is invalid")
 			return false
-func check_phase_condition(context:ActionContext, condition:PhaseConditionData) -> bool:	
-	return context.phase == condition.phase
+func check_phase_condition(phase:Enums.GamePhase, condition:PhaseConditionData) -> bool:	
+	return phase == condition.phase
 	
 func check_trigger_condition(context:ActionContext, condition:TriggerConditionData) -> bool:
 	if context.action_instance == null: return false
@@ -153,21 +161,21 @@ func check_trigger_condition(context:ActionContext, condition:TriggerConditionDa
 				printerr("Shouldnt have an ActorExecutesAction condition without a type")
 				return false
 			var valid = condition.actionType == actionType
-			valid = valid and (condition.amount == 0 or context.result >= condition.amount)
+			valid = valid and (condition.triggerConditionValue == 0 or context.result >= condition.triggerConditionValue)
 			return valid 
-		Enums.TriggerConditionType.ActorExectuesActionTarget:	
+		Enums.TriggerConditionType.ActorExectuesActionTarget:
 			var actionType = context.action_instance.base_action.type
 			var valid = condition.actionType == null or condition.actionType == actionType
-			valid = valid and source is BaseStatusEffectInstance
-			valid = valid and context.targets.has(source.character)
-			valid = valid and (condition.amount == 0 or context.result >= condition.amount)
+			valid = valid and self.triggerSource is BaseStatusEffectInstance
+			valid = valid and context.current_target_eval == self.triggerSource.character
+			valid = valid and (condition.triggerConditionValue == 0 or context.result >= condition.triggerConditionValue)
 			return valid 
 		Enums.TriggerConditionType.ActorKillsTrigger:
 			var actionType = context.action_instance.base_action.type
 			var valid = actionType == Enums.ActionType.DamageAction
-			valid = valid and source is BaseStatusEffectInstance
-			valid = valid and context.targets.has(source.character)
-			valid = valid and !source.character.is_alive()
+			valid = valid and self.triggerSource is BaseStatusEffectInstance
+			valid = valid and context.targets.has(self.triggerSource.character)
+			valid = valid and !self.triggerSource.character.is_alive()
 			return valid
 		_:
 			printerr("Trigger trigger condition is invalid")

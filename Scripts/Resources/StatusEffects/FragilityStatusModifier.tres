@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="Resource_uixgu"]
 script = ExtResource("1_6s3b3")
 condition_type = 2
-value = true
+boolConditionValue = false
 
 [resource]
 script = ExtResource("2_vgjlw")

@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="BaseStatusEffectData" load_steps=12 format=3 uid="uid://r0t6o8g7nc4d"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectData.gd" id="1_kiu3s"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/TriggerConditionData.gd" id="2_6xtnm"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/PhaseConditionData.gd" id="3_xsrjd"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseTriggerData.gd" id="5_u4cps"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="6_afy87"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="6_f26j7"]
+
+[sub_resource type="Resource" id="Resource_y2hso"]
+script = ExtResource("2_6xtnm")
+condition_type = 1
+actionType = 0
+triggerConditionValue = 0
+
+[sub_resource type="Resource" id="Resource_0gt0s"]
+script = ExtResource("3_xsrjd")
+phase = 4
+
+[sub_resource type="Resource" id="Resource_0lpvj"]
+script = ExtResource("6_afy87")
+value = 0.5
+valueType = 2
+operation = 1
+
+[sub_resource type="Resource" id="Resource_2kqa2"]
+script = ExtResource("6_f26j7")
+type = 0
+value = SubResource("Resource_0lpvj")
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+
+[sub_resource type="Resource" id="Resource_nfp5a"]
+script = ExtResource("5_u4cps")
+trigger_action_type = 0
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_y2hso"), SubResource("Resource_0gt0s")])
+target = 1
+triggered_actions = Array[ExtResource("6_f26j7")]([SubResource("Resource_2kqa2")])
+trigger_actor = 2
+
+[resource]
+script = ExtResource("1_kiu3s")
+name = "Parry"
+description = "Character will parry incoming attacks for half the damage being dealt to it (base damage) "
+modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
+triggers = Array[ExtResource("5_u4cps")]([SubResource("Resource_nfp5a")])
+isBuff = false

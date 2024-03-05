@@ -1,27 +1,40 @@
-[gd_resource type="Resource" script_class="BaseCardData" load_steps=9 format=3 uid="uid://8je7a82fr144"]
+[gd_resource type="Resource" script_class="BaseCardData" load_steps=12 format=3 uid="uid://8je7a82fr144"]
 
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="1_g0cba"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="2_sl1kl"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/NumberConditionData.gd" id="2_x2ac0"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseCardData.gd" id="3_2aph7"]
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectActionData.gd" id="3_adrjo"]
 [ext_resource type="Resource" uid="uid://bgnkspn17vo74" path="res://Scripts/Resources/StatusEffects/StunStatusEffect.tres" id="3_ckcto"]
 
+[sub_resource type="Resource" id="Resource_lncpw"]
+script = ExtResource("2_sl1kl")
+value = 6.0
+valueType = 0
+operation = 0
+
 [sub_resource type="Resource" id="Resource_xd0v1"]
 script = ExtResource("1_g0cba")
 type = 0
-value = 1.0
+value = SubResource("Resource_lncpw")
 conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
 
 [sub_resource type="Resource" id="Resource_3lkda"]
 script = ExtResource("2_x2ac0")
 condition_type = 1
+numberConditionValue = 5.0
+
+[sub_resource type="Resource" id="Resource_2678s"]
+script = ExtResource("2_sl1kl")
 value = 5.0
+valueType = 0
+operation = 0
 
 [sub_resource type="Resource" id="Resource_cd7qg"]
 script = ExtResource("3_adrjo")
 status_effect = ExtResource("3_ckcto")
 type = 3
-value = 4.0
+value = SubResource("Resource_2678s")
 conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_3lkda")])
 
 [resource]
