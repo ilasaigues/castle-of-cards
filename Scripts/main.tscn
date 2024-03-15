@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cbwpngm32l1th"]
+[gd_scene load_steps=24 format=3 uid="uid://cbwpngm32l1th"]
 
 [ext_resource type="Script" path="res://Scripts/Test/Test.gd" id="1_rtubh"]
 [ext_resource type="Resource" uid="uid://7g8gnvoct67x" path="res://test_deck.tres" id="2_r0d0j"]
@@ -14,6 +14,7 @@
 [ext_resource type="Resource" uid="uid://dh6e60sjgipa" path="res://Scripts/Resources/Artifacts/IAmStronkArtifact.tres" id="14_45max"]
 [ext_resource type="Resource" uid="uid://ct4hk6xdtqytv" path="res://Scripts/Resources/Artifacts/HealthyBoiArtifact.tres" id="15_1wg17"]
 [ext_resource type="Resource" uid="uid://4g7a6c7de5q8" path="res://Scripts/Resources/Artifacts/ProficientHealerArtifact.tres" id="16_m4il3"]
+[ext_resource type="Resource" uid="uid://cio2j4ef2y1xd" path="res://Scripts/Resources/Artifacts/AggresiveHealerArtifact.tres" id="16_pl6ge"]
 [ext_resource type="Resource" uid="uid://b58ycpr3l8yrx" path="res://Scripts/Resources/Artifacts/EasilyHealable.tres" id="17_wk2k7"]
 
 [sub_resource type="Resource" id="Resource_t1pmm"]
@@ -69,4 +70,4 @@ script = ExtResource("1_rtubh")
 starterDeck = ExtResource("2_r0d0j")
 playerCharacter = ExtResource("3_ueskh")
 testBattle = ExtResource("4_dkeru")
-starterArtifacts = Array[ExtResource("5_84ocy")]([SubResource("Resource_qk3ep"), SubResource("Resource_qqn47"), ExtResource("10_ek7b8"), ExtResource("13_uegqh"), ExtResource("14_45max"), ExtResource("15_1wg17"), ExtResource("16_m4il3"), ExtResource("17_wk2k7")])
+starterArtifacts = Array[ExtResource("5_84ocy")]([SubResource("Resource_qk3ep"), SubResource("Resource_qqn47"), ExtResource("10_ek7b8"), ExtResource("13_uegqh"), ExtResource("14_45max"), ExtResource("15_1wg17"), ExtResource("16_m4il3"), ExtResource("17_wk2k7"), ExtResource("16_pl6ge")])

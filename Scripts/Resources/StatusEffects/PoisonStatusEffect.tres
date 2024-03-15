@@ -1,11 +1,40 @@
-[gd_resource type="Resource" script_class="BaseStatusEffectData" load_steps=2 format=3 uid="uid://b1b54l0tac8u3"]
+[gd_resource type="Resource" script_class="BaseStatusEffectData" load_steps=10 format=3 uid="uid://b1b54l0tac8u3"]
 
 [ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseStatusEffectData.gd" id="2_1gp6p"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseTriggerData.gd" id="2_27u3d"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/PhaseConditionData.gd" id="2_48nd7"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="3_qdfog"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="4_ln8vf"]
+
+[sub_resource type="Resource" id="Resource_cld3w"]
+script = ExtResource("2_48nd7")
+phase = 1
+
+[sub_resource type="Resource" id="Resource_a7vio"]
+script = ExtResource("4_ln8vf")
+value = 3.0
+valueType = 0
+operation = 0
+
+[sub_resource type="Resource" id="Resource_gv5nr"]
+script = ExtResource("3_qdfog")
+type = 0
+value = SubResource("Resource_a7vio")
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+fireTriggers = true
+
+[sub_resource type="Resource" id="Resource_ex7yj"]
+script = ExtResource("2_27u3d")
+trigger_action_type = 0
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_cld3w")])
+target = 7
+triggered_actions = Array[ExtResource("3_qdfog")]([SubResource("Resource_gv5nr")])
+trigger_actor = 3
 
 [resource]
 script = ExtResource("2_1gp6p")
 name = "Poison"
 description = ""
 modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
-triggers = Array[Resource("res://Scripts/Data/BaseData/BaseTriggerData.gd")]([])
+triggers = Array[ExtResource("2_27u3d")]([SubResource("Resource_ex7yj")])
 isBuff = false

@@ -5,4 +5,5 @@ class_name BaseActionData
 @export var type:Enums.ActionType
 @export var value: BaseValueData
 @export var conditions:Array[BaseConditionData]=[]
+@export var fireTriggers:bool=true
 

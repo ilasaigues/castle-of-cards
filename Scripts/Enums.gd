@@ -11,6 +11,7 @@ enum StatType
 	DrawCount,
 	EnergyGain,
 	MaxHP,
+	ArtifactCount
 }
 
 # defines the types of actions that are going to be enqueued.
@@ -77,10 +78,12 @@ enum GamePhase
 	BattleStart,
 	TurnStart,
 	DrawStart,
-	ActiveTurn,
+	PlayingCard,
+	CardPlayed,
 	ResponsePhase,
 	TurnEnd,
 	GameOver,
+	PreTurnStart
 }
 
 enum StatusEffectType
@@ -112,7 +115,8 @@ enum TriggerTargetType
 	RandomCharacter,
 	AllEnemies,
 	AllAllies,
-	All
+	All,
+	Self
 }
 
 enum TriggerActor
@@ -129,13 +133,17 @@ enum OperationType
 {
 	Additive,
 	Multiplicative,
-	Override
+	Override,
+	Interrupt
 }
 
 enum ValueType 
 {
 	Default,
 	XCurrEnergy,
-	XCurrResult,
-	XCurrCards
+	XCurrResultValue,
+	XCurrResultTargets,
+	XCurrCards,
+	XResultTotal,
+	ResetStat
 }

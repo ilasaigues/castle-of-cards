@@ -7,7 +7,7 @@
 [sub_resource type="Resource" id="Resource_bwuot"]
 script = ExtResource("2_s7t4j")
 value = 1.0
-valueType = 3
+valueType = 4
 operation = 1
 
 [sub_resource type="Resource" id="Resource_1jee6"]
@@ -15,6 +15,7 @@ script = ExtResource("1_whsqs")
 type = 0
 value = SubResource("Resource_bwuot")
 conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+fireTriggers = true
 
 [resource]
 script = ExtResource("1_3rar5")

@@ -1,26 +1,26 @@
 extends BaseActionInstance
 class_name DamageActionInstance
 
-func Execute():
-	var modType = Enums.StatType.Damage
+func get_mod_type() -> Enums.StatType:
+	return Enums.StatType.Damage
 
-	var actionValue:int = self.GetInitialValue()
+func ExecuteImplementation(target:CharacterInstance, targetDmg:int):
+	if targetDmg == self.NULL_INT:
+		return 
 
-	print("Damage action. Initial damage %s" % actionValue)
-	var modifiers = self.GetActorModifiers(modType)
-	var damage = BaseActionInstance.GetModifiedOutput(actionValue, modifiers)
-	
-	for tIdx in range(self.action_context.targets.size()):
-		var target = self.action_context.setCurrentTarget(tIdx)
-		var targetModifiers = self.GetTargetModifiers(modType)
-		targetModifiers = targetModifiers.filter(func(tm): return !modifiers.has(tm))
-		
-		var targetDmg = BaseActionInstance.GetModifiedOutput(damage, targetModifiers)
-		print("Damaged target %s from %s to %s" % [target.base_data.name, target.current_hp, target.current_hp-targetDmg])
-		
-		target.current_hp -= targetDmg		
-		self.action_context.result = targetDmg
+	var previousDefense:int = target.current_defense
+	var previousHp:int = target.current_hp
 
-		print("Checking for triggers after damaging")
-		self.battle_manager.RunArtifactsAndStatusEffectsTriggers(Enums.GamePhase.ResponsePhase, self.action_context)
-		print("Ran all triggers")
+	if previousDefense > 0:
+		# Hit armor animation
+		target.current_defense -= min(targetDmg, previousDefense)
+
+	if previousDefense > 0 and previousDefense <= targetDmg:
+		# Break armor animation
+		var _removethis = 2
+
+	if previousDefense < targetDmg:
+		target.current_hp = max(0, previousHp - (targetDmg - previousDefense))
+		# Take damage animation
+
+	print("Damaged target %s from %s/%s to %s/%s (defense/HP)" % [target.base_data.name, previousDefense, previousHp, target.current_defense, target.current_hp])

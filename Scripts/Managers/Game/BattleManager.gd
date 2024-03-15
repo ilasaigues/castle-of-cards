@@ -7,8 +7,8 @@ var DeckMngr:DeckManager
 var HandMngr:HandManager
 var GameMngr:GameManager
 
+var playerTurn:bool
 var enemies: Array[CharacterInstance]
-
 
 # Initializes default data
 func StartBattle(gameManager:GameManager, deckManager:DeckManager, battleData:BaseBattleData):
@@ -17,6 +17,7 @@ func StartBattle(gameManager:GameManager, deckManager:DeckManager, battleData:Ba
 	GameMngr = gameManager
 	HandMngr = HandManager.new()
 	HandMngr.start_new_game(deckManager,GameMngr)
+	self.playerTurn=true
 	print("Instantiate enemies")
 	for data in self.BattleData.enemies:
 		enemies.append(CharacterInstance.new(data))
@@ -33,15 +34,35 @@ func StartPhase():
 
 func StartTurn():
 	print("Turn phase started")
+	
+	if self.playerTurn:
+		self.CharacterDefenseReset(self.GameMngr.PlayerCharacter)
+		self.HandMngr.new_turn()
+	else:
+		for enemy in self.enemies:
+			self.CharacterDefenseReset(enemy)
+
 	self.RunArtifactsAndStatusEffectsTriggers(Enums.GamePhase.TurnStart)
 	print("Turn phase start ended")
 
 func PlayCard(cardIdx:int, targets:Array[CharacterInstance]):
 	print("Active turn phase started")
-	var actionContext:ActionContext = self.HandMngr.play_card(cardIdx, targets)
-	self.RunArtifactsAndStatusEffectsTriggers(Enums.GamePhase.ActiveTurn, actionContext)
+	self.HandMngr.play_card(cardIdx, targets)
 	print("Active turn phase ended")
 
+func CharacterDefenseReset(character:CharacterInstance):
+	var defenseAC = ActionContext.new(Enums.GamePhase.PreTurnStart, null, [character], null, [])
+	
+	var valueData = BaseValueData.new()
+	valueData.valueType = Enums.ValueType.ResetStat
+
+	var defenseBreakAD = BaseActionData.new()
+	defenseBreakAD.type = Enums.ActionType.DefenseAction
+	defenseBreakAD.value = valueData
+	
+	BaseActionInstance.GetActionInstance(defenseBreakAD, defenseAC, self)\
+		.Execute()
+	
 func EndTurn():
 	pass
 
@@ -73,7 +94,6 @@ func RunArtifactsAndStatusEffectsTriggers(phase:Enums.GamePhase,previousAction:A
 		
 		print("Creating Trigger actions for artifact %s #(%s)" % [artifact.baseData.name, artifactTriggerActions.size()])
 		actions.append_array(artifactTriggerActions)
-	print("\n")
 	
 	var actionQueue:Array[BaseActionInstance] = []
 	actionQueue.append_array(actions)

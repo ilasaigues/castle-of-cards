@@ -8,3 +8,6 @@ class_name BaseCharacterData
 @export var starting_status_effects:Array[BaseStatusEffectData] = []
 @export var starting_status_effects_turns:Array[int] = []
 @export var is_player:bool = false
+
+# Remove later
+@export var starting_defense:int

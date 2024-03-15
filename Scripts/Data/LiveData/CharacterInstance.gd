@@ -15,6 +15,7 @@ func is_alive():
 func _init(baseData:BaseCharacterData):
 	self.base_data = baseData
 	current_hp = baseData.max_hp
+	current_defense = baseData.starting_defense
 	for idx in range(baseData.starting_status_effects.size()):
 		var statusEffectData=baseData.starting_status_effects[idx]
 		var statusEffectTurns=baseData.starting_status_effects_turns[idx]

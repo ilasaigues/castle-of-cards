@@ -7,12 +7,12 @@ var operation:Enums.OperationType
 var modifier_conditionals:Array[BaseConditionData]
 var source
 
-func _init(source, baseData:BaseActionModifierData):
+func _init(sourceInit, baseData:BaseActionModifierData):
 	self.type=baseData.type
 	self.amount=baseData.amount
 	self.operation=baseData.operation
 	self.modifier_conditionals=baseData.modifier_conditionals
-	self.source = source
+	self.source = sourceInit
 
 func is_valid(context:ActionContext):
 	var valid = true

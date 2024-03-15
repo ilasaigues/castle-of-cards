@@ -16,7 +16,7 @@ triggerConditionValue = 0
 
 [sub_resource type="Resource" id="Resource_0gt0s"]
 script = ExtResource("3_x2mmr")
-phase = 4
+phase = 5
 
 [sub_resource type="Resource" id="Resource_bj5fo"]
 script = ExtResource("4_5o55f")
@@ -34,6 +34,7 @@ script = ExtResource("4_7d8t8")
 type = 0
 value = SubResource("Resource_lvejd")
 conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+fireTriggers = true
 
 [sub_resource type="Resource" id="Resource_nfp5a"]
 script = ExtResource("3_j7tpx")

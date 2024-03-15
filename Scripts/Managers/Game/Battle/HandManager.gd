@@ -24,13 +24,6 @@ func start_new_game(deckManager:DeckManager, gameManager:GameManager):
 	# deck.shuffle()
 	new_turn()
 	
-	var idx = 0
-	for cardInstance in hand:
-		var display = cardPrefab.instantiate()
-		display.SetInstance(cardInstance)
-		GameMngr.add_child(display)
-		display.position.x += 110 * idx
-		idx=idx+1
 	
 
 	
@@ -50,11 +43,12 @@ func play_card(index: int, targets: Array[CharacterInstance]) -> ActionContext:
 		
 	# This should be moved elsewhere. Maybe TurnManager which handles all the
 	# logic of player/enemy actions
-	
-	var actionContext = ActionContext.new(Enums.GamePhase.ActiveTurn,\
+	var actionContext = ActionContext.new(Enums.GamePhase.PlayingCard,\
 		GameMngr.PlayerCharacter,targets,card,\
 		GameMngr.ArtifactMngr.Artifacts)
 	
+	GameMngr.BattleMngr.RunArtifactsAndStatusEffectsTriggers(Enums.GamePhase.PlayingCard, actionContext)
+
 	currentEnergy = currentEnergy - card.current_cost
 	
 	for baseAction in cardData.action_list:
@@ -62,6 +56,8 @@ func play_card(index: int, targets: Array[CharacterInstance]) -> ActionContext:
 		actionInstance.Execute()
 		actionContext.current_target_eval = null
 	
+	GameMngr.BattleMngr.RunArtifactsAndStatusEffectsTriggers(Enums.GamePhase.CardPlayed, actionContext)
+
 	return actionContext
 
 # Also should go in a TurnManager. The idea behind this is to have a pre-play
@@ -99,6 +95,14 @@ func new_turn():
 		discard_all()
 	draw_cards(GameMngr.GetHandSize())
 	currentEnergy = GameMngr.GetEnergyPerTurn()
+
+	var idx = 0
+	for cardInstance in hand:
+		var display = cardPrefab.instantiate()
+		display.SetInstance(cardInstance)
+		GameMngr.add_child(display)
+		display.position.x += 110 * idx
+		idx=idx+1
 
 func draw_cards(amount:int):
 	for i in range(amount,0,-1):

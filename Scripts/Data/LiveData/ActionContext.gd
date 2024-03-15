@@ -9,7 +9,8 @@ var source_card:CardInstance
 var current_target_eval:CharacterInstance
 var action_instance:BaseActionInstance
 var result: int
-#var source_trigger:TriggerInstance
+var resultData:ResultData
+var source_trigger:BaseTriggerInstance
 
 func _init(
 	initPhase:Enums.GamePhase,
@@ -23,6 +24,7 @@ func _init(
 	self.targets=initTargets
 	self.source_card=initSourceCard
 	self.artifacts=initArtifacts
+	self.resultData=ResultData.new()
 
 func setCurrentTarget(idx: int) -> CharacterInstance:
 	if idx < 0 or idx >= self.targets.size(): printerr("Action context invalid target setting")

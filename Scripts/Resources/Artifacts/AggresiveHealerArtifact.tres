@@ -1,0 +1,78 @@
+[gd_resource type="Resource" script_class="BaseArtifactData" load_steps=18 format=3 uid="uid://cio2j4ef2y1xd"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/PhaseConditionData.gd" id="2_4rae3"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseTriggerData.gd" id="2_jxspq"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/NumberConditionData.gd" id="3_3engw"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseArtifactData.gd" id="3_iq38u"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="4_8y34e"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="5_pwsdo"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/TriggerConditionData.gd" id="7_h2xq2"]
+
+[sub_resource type="Resource" id="Resource_x141c"]
+script = ExtResource("2_4rae3")
+phase = 4
+
+[sub_resource type="Resource" id="Resource_uewib"]
+script = ExtResource("3_3engw")
+condition_type = 0
+numberConditionValue = 3.0
+
+[sub_resource type="Resource" id="Resource_n2nb1"]
+script = ExtResource("7_h2xq2")
+condition_type = 0
+actionType = 0
+triggerConditionValue = 0
+
+[sub_resource type="Resource" id="Resource_u3xiu"]
+script = ExtResource("5_pwsdo")
+value = 3.0
+valueType = 3
+operation = 1
+
+[sub_resource type="Resource" id="Resource_85alp"]
+script = ExtResource("4_8y34e")
+type = 1
+value = SubResource("Resource_u3xiu")
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+fireTriggers = true
+
+[sub_resource type="Resource" id="Resource_dunra"]
+script = ExtResource("2_jxspq")
+trigger_action_type = 1
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_x141c"), SubResource("Resource_uewib"), SubResource("Resource_n2nb1")])
+target = 0
+triggered_actions = Array[ExtResource("4_8y34e")]([SubResource("Resource_85alp")])
+trigger_actor = 1
+
+[sub_resource type="Resource" id="Resource_tewiu"]
+script = ExtResource("2_4rae3")
+phase = 3
+
+[sub_resource type="Resource" id="Resource_0mh2s"]
+script = ExtResource("5_pwsdo")
+value = 1.0
+valueType = 0
+operation = 0
+
+[sub_resource type="Resource" id="Resource_11k7p"]
+script = ExtResource("4_8y34e")
+type = 11
+value = SubResource("Resource_0mh2s")
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+fireTriggers = true
+
+[sub_resource type="Resource" id="Resource_3wx8b"]
+script = ExtResource("2_jxspq")
+trigger_action_type = 11
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_tewiu")])
+target = 0
+triggered_actions = Array[ExtResource("4_8y34e")]([SubResource("Resource_11k7p")])
+trigger_actor = 1
+
+[resource]
+script = ExtResource("3_iq38u")
+id = "Aggresive Healer"
+name = "Aggresive Healer"
+description = "Every 3 cards played, for each target hit, player heals for 3 points"
+modifiers = Array[Resource("res://Scripts/Data/BaseData/BaseActionModifierData.gd")]([])
+triggers = Array[ExtResource("2_jxspq")]([SubResource("Resource_dunra"), SubResource("Resource_3wx8b")])

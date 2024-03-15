@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="BaseActionData" load_steps=6 format=3 uid="uid://dwhaokfsu1slg"]
+
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseActionData.gd" id="1_a4jx3"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/Conditions/PhaseConditionData.gd" id="1_t8w7w"]
+[ext_resource type="Script" path="res://Scripts/Data/BaseData/BaseValueData.gd" id="2_gmoq0"]
+
+[sub_resource type="Resource" id="Resource_rdtqc"]
+script = ExtResource("1_t8w7w")
+phase = 1
+
+[sub_resource type="Resource" id="Resource_v5pyd"]
+script = ExtResource("2_gmoq0")
+value = 3.0
+valueType = 0
+operation = 2
+
+[resource]
+script = ExtResource("1_a4jx3")
+type = 10
+value = SubResource("Resource_v5pyd")
+conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([SubResource("Resource_rdtqc")])
+fireTriggers = true

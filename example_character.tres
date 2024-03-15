@@ -10,3 +10,4 @@ max_hp = 20
 starting_status_effects = Array[Resource("res://Scripts/Data/BaseData/BaseStatusEffectData.gd")]([])
 starting_status_effects_turns = Array[int]([3])
 is_player = true
+starting_defense = 15

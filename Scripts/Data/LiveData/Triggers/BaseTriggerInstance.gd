@@ -32,7 +32,7 @@ func GetTriggeredActions(phase:Enums.GamePhase,\
 			
 		previousAction = ActionContext.new(phase, sourceCharacter, [], null, [])
 	
-	if !is_trigger_valid(phase,previousAction): return []
+	if !is_trigger_valid(phase,previousAction,battleMngr): return []
 	
 	var actions:Array[BaseActionInstance]=[]
 	for actionData in self.triggered_actions:
@@ -46,7 +46,10 @@ func GetTriggeredActions(phase:Enums.GamePhase,\
 				actor = self.triggerSource.character
 			if self.trigger_actor == Enums.TriggerActor.StatusEffectEnvironment:
 				actor = null
-		
+		elif self.triggerSource is ArtifactInstance:
+			if self.trigger_actor == Enums.TriggerActor.ArtifactTriggerByEnvironment:
+				actor = null
+
 		var targets = get_trigger_targets(previousAction, battleMngr)
 		
 		var triggeredActionContext = ActionContext.new(phase,\
@@ -55,6 +58,7 @@ func GetTriggeredActions(phase:Enums.GamePhase,\
 			null,\
 			battleMngr.GameMngr.ArtifactMngr.Artifacts)
 		triggeredActionContext.result = previousAction.result
+		triggeredActionContext.source_trigger = self
 		
 		var action = BaseActionInstance.GetActionInstance(actionData,triggeredActionContext,battleMngr)
 		actions.append(action)
@@ -65,6 +69,9 @@ func get_trigger_targets(actionContext:ActionContext,battleMngr:BattleManager) -
 	var targets:Array[CharacterInstance]=[]
 	var player = battleMngr.GameMngr.PlayerCharacter
 	match self.target:
+		Enums.TriggerTargetType.Self:
+			if self.triggerSource is BaseStatusEffectInstance:
+				targets = [self.triggerSource.character]
 		Enums.TriggerTargetType.Player:
 			targets = [player]
 		Enums.TriggerTargetType.ActorEnemy:
@@ -106,15 +113,18 @@ func get_trigger_targets(actionContext:ActionContext,battleMngr:BattleManager) -
 			
 	return targets
 	
-func is_trigger_valid(phase:Enums.GamePhase,context:ActionContext) -> bool:
+func is_trigger_valid(phase:Enums.GamePhase,context:ActionContext,battleMngr:BattleManager) -> bool:
 	var valid = true
+	valid = valid and (context.action_instance == null or \
+		context.action_instance.base_action.fireTriggers)
+	
 	for condition in self.conditions:
 		if condition is BoolConditionData:
 			valid = valid and check_bool_condition(context, condition)
 		if condition is NumberConditionData:
 			valid = valid and check_number_condition(context, condition)
 		if condition is PhaseConditionData:
-			valid = valid and check_phase_condition(phase, condition)
+			valid = valid and check_phase_condition(phase, condition, battleMngr)
 		if condition is TriggerConditionData:
 			valid = valid and check_trigger_condition(context, condition)
 	return valid
@@ -136,7 +146,7 @@ func check_number_condition(context:ActionContext, condition:NumberConditionData
 		Enums.NumberConditionType.ArtifactCounterEquals:
 			if self.triggerSource is ArtifactInstance:
 				var artifact = self.triggerSource as ArtifactInstance
-				return artifact.count == condition.numberConditionValue
+				return fmod(artifact.count, condition.numberConditionValue) == 0
 			print_rich("[color=#FF0000]ERROR: ARTIFACT CONDITION IN NON-ARTIFACT MODIFIER[/color]")
 			return false
 		Enums.NumberConditionType.CharacterHPLessThan:
@@ -148,9 +158,26 @@ func check_number_condition(context:ActionContext, condition:NumberConditionData
 		_:
 			printerr("Trigger number condition is invalid")
 			return false
-func check_phase_condition(phase:Enums.GamePhase, condition:PhaseConditionData) -> bool:	
-	return phase == condition.phase
-	
+
+func check_phase_condition(phase:Enums.GamePhase, condition:PhaseConditionData, battleMngr:BattleManager) -> bool:
+	var isValid:bool = phase == condition.phase	
+
+	if !isValid: return false
+	match phase:
+		Enums.GamePhase.TurnStart:
+			return is_character_turn(battleMngr)
+		Enums.GamePhase.TurnEnd:
+			return is_character_turn(battleMngr)
+
+	return isValid
+
+func is_character_turn(battleMngr:BattleManager):
+	if !(self.triggerSource is BaseStatusEffectInstance): return true
+	var isPlayerTurnAndTrigger = battleMngr.playerTurn and self.triggerSource.character.base_data.is_player
+	var isEnemyTurnAndTrigger = !battleMngr.playerTurn and battleMngr.enemies.has(self.triggerSource.character)
+	var isValid = isPlayerTurnAndTrigger or isEnemyTurnAndTrigger
+	return isValid
+
 func check_trigger_condition(context:ActionContext, condition:TriggerConditionData) -> bool:
 	if context.action_instance == null: return false
 	

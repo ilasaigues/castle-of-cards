@@ -23,6 +23,7 @@ status_effect = ExtResource("5_rbhq0")
 type = 3
 value = SubResource("Resource_lhcxd")
 conditions = Array[Resource("res://Scripts/Data/BaseData/Conditions/BaseConditionData.gd")]([])
+fireTriggers = true
 
 [sub_resource type="Resource" id="Resource_00dhl"]
 script = ExtResource("3_7hrgh")
